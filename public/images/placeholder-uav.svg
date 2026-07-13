@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400">
+  <rect width="600" height="400" fill="#F7F7F7"/>
+  <rect x="20" y="20" width="560" height="360" rx="16" fill="#E5E5E5"/>
+  <!-- Airplane/UAV Icon Flat -->
+  <path d="M300 130 L320 180 L420 200 L320 220 L300 270 L280 220 L180 200 L280 180 Z" fill="#C1121F"/>
+  <text x="300" y="315" font-family="sans-serif" font-size="20" font-weight="700" fill="#4B4B4B" text-anchor="middle" letter-spacing="2">UAV IMAGE PLACEHOLDER</text>
+  <text x="300" y="340" font-family="sans-serif" font-size="14" font-weight="500" fill="#8E0D17" text-anchor="middle">APTRG TELKOM UNIVERSITY</text>
+</svg>

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" width="160" height="160">
+  <rect width="160" height="160" rx="24" fill="#4B4B4B"/>
+  <rect x="12" y="12" width="136" height="136" rx="18" fill="#111111"/>
+  <text x="80" y="86" font-family="sans-serif" font-size="34" font-weight="900" fill="#FFFFFF" text-anchor="middle">VTOL</text>
+  <text x="80" y="118" font-family="sans-serif" font-size="13" font-weight="700" fill="#C1121F" text-anchor="middle" letter-spacing="1">RAVEN</text>
+</svg>
