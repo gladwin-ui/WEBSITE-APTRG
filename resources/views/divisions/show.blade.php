@@ -17,6 +17,31 @@
                 {{ $division->name }}
             </h1>
 
+            <!-- 1. KOORDINATOR DIVISI DI ATAS SEBELUM FOTO DIVISI -->
+            <div class="mt-10 max-w-4xl mx-auto">
+                <x-card class="p-8 sm:p-10 text-center shadow-md">
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-primary pb-3 border-b border-line mb-8">
+                        Koordinator Divisi
+                    </h3>
+                    @forelse ($members as $member)
+                        <div class="flex flex-col items-center justify-center gap-6">
+                            <img src="{{ asset($member->photo_path ?: 'images/avatar-placeholder.svg') }}" 
+                                 alt="{{ $member->name }}" 
+                                 class="w-48 h-48 sm:w-56 sm:h-56 rounded-full object-cover object-top border-4 border-primary shadow-md mx-auto">
+                            <div class="space-y-2">
+                                <h4 class="text-2xl sm:text-3xl font-extrabold text-ink">{{ $member->name }}</h4>
+                                <p class="text-base font-bold text-primary uppercase tracking-wide">{{ $member->position }}</p>
+                                <p class="text-sm sm:text-base text-body pt-1">
+                                    {{ $member->study_program }} &bull; Angkatan {{ $member->batch }}
+                                </p>
+                            </div>
+                        </div>
+                    @empty
+                        <p class="text-sm text-body text-center py-4">Belum ada data koordinator.</p>
+                    @endforelse
+                </x-card>
+            </div>
+
             <!-- Foto Header Divisi -->
             @php
                 $headerImage = match($division->slug) {
@@ -26,7 +51,7 @@
                     default => asset('images/bg-hero-1.jpg'),
                 };
             @endphp
-            <div class="mt-8 overflow-hidden rounded-xl border border-line shadow-sm bg-canvas">
+            <div class="mt-10 overflow-hidden rounded-xl border border-line shadow-sm bg-canvas">
                 <img src="{{ $headerImage }}" 
                      alt="Foto Header {{ $division->name }}" 
                      class="w-full h-96 sm:h-[32rem] object-cover object-[50%_65%]">
@@ -37,29 +62,6 @@
     <!-- DETAIL CONTENT (VERTIKAL DARI ATAS KE BAWAH) -->
     <section class="py-16 bg-canvas border-b border-line">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
-            
-            <!-- 1. KOORDINATOR DIVISI -->
-            <x-card class="p-8 sm:p-10 text-center">
-                <h3 class="text-xs font-bold uppercase tracking-wider text-primary pb-3 border-b border-line mb-8">
-                    Koordinator Divisi
-                </h3>
-                @forelse ($members as $member)
-                    <div class="flex flex-col items-center justify-center gap-6">
-                        <img src="{{ asset($member->photo_path ?: 'images/avatar-placeholder.svg') }}" 
-                             alt="{{ $member->name }}" 
-                             class="w-48 h-48 sm:w-56 sm:h-56 rounded-full object-cover object-top border-4 border-primary shadow-md mx-auto">
-                        <div class="space-y-2">
-                            <h4 class="text-2xl sm:text-3xl font-extrabold text-ink">{{ $member->name }}</h4>
-                            <p class="text-base font-bold text-primary uppercase tracking-wide">{{ $member->position }}</p>
-                            <p class="text-sm sm:text-base text-body pt-1">
-                                {{ $member->study_program }} &bull; Angkatan {{ $member->batch }}
-                            </p>
-                        </div>
-                    </div>
-                @empty
-                    <p class="text-sm text-body text-center py-4">Belum ada data koordinator.</p>
-                @endforelse
-            </x-card>
 
             <!-- 2. DESKRIPSI DIVISI -->
             <x-card class="p-8">

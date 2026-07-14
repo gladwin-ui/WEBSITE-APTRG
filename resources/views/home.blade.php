@@ -27,7 +27,7 @@
                  x-transition:leave-end="opacity-0"
                  class="w-full h-full object-cover object-top absolute inset-0">
             <!-- Flat Solid Overlay (NO GRADIENT) -->
-            <div class="absolute inset-0 bg-ink/80"></div>
+            <div class="absolute inset-0 bg-ink/60"></div>
         </div>
 
         <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-36 sm:pt-44 pb-20 sm:pb-28">
