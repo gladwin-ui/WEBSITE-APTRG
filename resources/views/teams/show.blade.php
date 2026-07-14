@@ -39,7 +39,7 @@
                     </x-card>
 
                     <x-card class="p-8">
-                        <x-section-heading title="Tema &amp; Misi Divisi KRTI" />
+                        <x-section-heading title="Tema & Misi Divisi KRTI" />
                         <p class="text-body leading-relaxed text-base">
                             {{ $team->mission_theme }}
                         </p>

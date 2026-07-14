@@ -7,6 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $title ? $title . ' | APTRG Telkom University' : 'APTRG Telkom University — Fight Together, Win Together' }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @if (request()->routeIs('home'))
+        <link rel="preload" as="image" href="{{ asset('images/bg-hero-1.jpg') }}" fetchpriority="high">
+    @endif
     <style>
         [x-cloak] { display: none !important; }
     </style>

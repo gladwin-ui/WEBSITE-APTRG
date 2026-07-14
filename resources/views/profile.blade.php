@@ -12,7 +12,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
                 <div class="lg:col-span-2 space-y-6">
-                    <x-section-heading title="Sejarah &amp; Dedikasi APTRG" subtitle="Berdiri sejak tahun {{ $profile->founded_year }}, menjadi pelopor teknologi wahana terbang tanpa awak di Telkom University." />
+                    <x-section-heading title="Sejarah & Dedikasi APTRG" subtitle="Berdiri sejak tahun {{ $profile->founded_year }}, menjadi pelopor teknologi wahana terbang tanpa awak di Telkom University." />
                     @foreach (explode("\n\n", $profile->about) as $p)
                         <p class="text-body leading-relaxed">{{ $p }}</p>
                     @endforeach
@@ -88,7 +88,7 @@
     <!-- LOKASI & KONTAK -->
     <section class="py-16 bg-surface">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <x-section-heading title="Lokasi &amp; Kontak" />
+            <x-section-heading title="Lokasi & Kontak" />
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <x-card class="p-6">
                     <h4 class="font-bold text-ink mb-2">Alamat Laboratorium</h4>

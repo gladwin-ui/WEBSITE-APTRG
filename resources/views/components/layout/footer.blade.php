@@ -26,7 +26,7 @@
                 <ul class="space-y-2 text-sm text-line">
                     <li><a href="{{ route('home') }}" class="hover:text-white transition-colors">Beranda</a></li>
                     <li><a href="{{ route('profile') }}" class="hover:text-white transition-colors">Profil & Visi Misi</a></li>
-                    <li><a href="{{ route('divisions.index') }}" class="hover:text-white transition-colors">Divisi Internal</a></li>
+                    <li><a href="{{ route('divisions.index') }}" class="hover:text-white transition-colors">Divisi Laboratorium</a></li>
                     <li><a href="{{ route('teams.index') }}" class="hover:text-white transition-colors">Tim Lomba KRTI</a></li>
                     <li><a href="{{ route('achievements.index') }}" class="hover:text-white transition-colors">Prestasi Lab</a></li>
                     <li><a href="{{ route('structure') }}" class="hover:text-white transition-colors">Struktur Kepengurusan</a></li>

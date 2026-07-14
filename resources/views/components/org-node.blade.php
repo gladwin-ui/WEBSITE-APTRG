@@ -3,7 +3,7 @@
 <div class="bg-surface border border-line rounded-lg p-5 w-64 sm:w-72 mx-auto text-center shadow-sm hover:border-primary transition-colors">
     <img src="{{ asset($member->photo_path ?: 'images/avatar-placeholder.svg') }}" 
          alt="{{ $member->name }}" 
-         class="w-20 h-20 mx-auto rounded-full object-cover border-2 border-primary mb-3">
+         class="w-20 h-20 mx-auto rounded-full object-cover object-top border-2 border-primary mb-3">
     <h4 class="font-bold text-ink text-sm leading-snug">
         {{ $member->name }}
     </h4>

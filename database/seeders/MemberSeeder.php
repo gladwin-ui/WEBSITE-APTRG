@@ -80,50 +80,50 @@ class MemberSeeder extends Seeder
 
         // Level 4: Koordinator Divisi (parent ke Wakil Eksternal)
         Member::create([
-            'name' => 'Dimas Satria Wibowo',
+            'name' => 'Alfian Maulana Surya Prastowo',
             'position' => 'Koordinator Divisi Mekanik',
             'level' => 4,
             'parent_id' => $wakilEksternal->id,
             'division_id' => $divMekanik?->id,
             'study_program' => 'S1 Teknik Elektro',
-            'batch' => '2022',
-            'photo_path' => 'images/avatar-placeholder.svg',
+            'batch' => '2023',
+            'photo_path' => 'images/koor-mekanik.jpg',
             'order' => 1,
         ]);
 
         Member::create([
-            'name' => 'Rayhan Firdaus Alghifari',
+            'name' => 'Aldora Rian Perdana',
             'position' => 'Koordinator Divisi Sistem',
             'level' => 4,
             'parent_id' => $wakilEksternal->id,
             'division_id' => $divSistem?->id,
             'study_program' => 'S1 Teknik Telekomunikasi',
-            'batch' => '2022',
-            'photo_path' => 'images/avatar-placeholder.svg',
+            'batch' => '2023',
+            'photo_path' => 'images/koor-sistem.jpg',
             'order' => 2,
         ]);
 
         Member::create([
-            'name' => 'Hafizh Maulana Hakim',
+            'name' => 'Azky Fadhel Ahmad',
             'position' => 'Koordinator Divisi GCS',
             'level' => 4,
             'parent_id' => $wakilEksternal->id,
             'division_id' => $divGcs?->id,
-            'study_program' => 'S1 Teknik Komputer',
-            'batch' => '2022',
+            'study_program' => 'S1 Teknik Telekomunikasi',
+            'batch' => '2023',
             'photo_path' => 'images/avatar-placeholder.svg',
             'order' => 3,
         ]);
 
         Member::create([
-            'name' => 'Clarissa Putri Maharani',
+            'name' => 'Darvesh Gladwin Musyaffa',
             'position' => 'Koordinator Divisi Non-Technical',
             'level' => 4,
             'parent_id' => $wakilEksternal->id,
             'division_id' => $divNonTech?->id,
-            'study_program' => 'S1 Teknik Telekomunikasi',
+            'study_program' => 'S1 Sistem Informasi',
             'batch' => '2023',
-            'photo_path' => 'images/avatar-placeholder.svg',
+            'photo_path' => 'images/koor-nontech.jpg',
             'order' => 4,
         ]);
     }

@@ -1,27 +1,53 @@
 <x-layout.app title="Beranda">
-    <!-- HERO SECTION (Flat Solid White/Red Accent) -->
-    <section class="bg-surface border-b border-line">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+    <!-- HERO SECTION (Background Slideshow with Flat Solid Overlay - NO GRADIENT) -->
+    <section class="relative bg-ink text-white border-b border-line overflow-hidden min-h-[85vh] flex flex-col justify-center"
+             x-data="{ activeSlide: 1 }"
+             x-init="setInterval(() => { activeSlide = activeSlide === 1 ? 2 : 1 }, 6000)">
+        <!-- Background Images -->
+        <div class="absolute inset-0 z-0">
+            <img src="{{ asset('images/bg-hero-1.jpg') }}" alt="APTRG Landing Background 1"
+                 fetchpriority="high"
+                 loading="eager"
+                 x-show="activeSlide === 1"
+                 x-transition:enter="transition ease-out duration-1000"
+                 x-transition:enter-start="opacity-0 scale-105"
+                 x-transition:enter-end="opacity-100 scale-100"
+                 x-transition:leave="transition ease-in duration-1000"
+                 x-transition:leave-start="opacity-100"
+                 x-transition:leave-end="opacity-0"
+                 class="w-full h-full object-cover object-top absolute inset-0">
+            <img src="{{ asset('images/bg-hero-2.jpg') }}" alt="APTRG Landing Background 2"
+                 x-show="activeSlide === 2"
+                 x-cloak
+                 x-transition:enter="transition ease-out duration-1000"
+                 x-transition:enter-start="opacity-0 scale-105"
+                 x-transition:enter-end="opacity-100 scale-100"
+                 x-transition:leave="transition ease-in duration-1000"
+                 x-transition:leave-start="opacity-100"
+                 x-transition:leave-end="opacity-0"
+                 class="w-full h-full object-cover object-top absolute inset-0">
+            <!-- Flat Solid Overlay (NO GRADIENT) -->
+            <div class="absolute inset-0 bg-ink/80"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-36 sm:pt-44 pb-20 sm:pb-28">
             <div class="max-w-3xl">
-                <span class="inline-block bg-primary-light text-primary text-xs font-bold uppercase tracking-wider px-3 py-1 rounded mb-6">
-                    Telkom University Research Group
-                </span>
-                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-ink leading-tight">
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight">
                     Aeromodelling &amp; Payload Telemetry Research Group
                 </h1>
                 <div class="h-1.5 w-24 bg-primary my-6"></div>
-                <p class="text-xl sm:text-2xl font-bold text-primary mb-6">
+                <p class="text-xl sm:text-2xl font-bold text-primary-light mb-6">
                     &ldquo;{{ $profile?->tagline ?? 'Fight Together, Win Together, Yes We Can' }}&rdquo;
                 </p>
-                <p class="text-base sm:text-lg text-body leading-relaxed mb-8">
+                <p class="text-base sm:text-lg text-line leading-relaxed mb-8">
                     Pusat inovasi dan pengembangan teknologi pesawat tanpa awak (UAV), aeromodelling, sistem telemetri muatan, aerial robotics, dan sistem kendali otonom di bawah naungan Fakultas Teknik Elektro, Telkom University.
                 </p>
-                <div class="flex flex-wrap gap-4">
-                    <a href="{{ route('profile') }}" class="inline-flex items-center justify-center px-6 py-3.5 bg-primary text-white font-bold rounded-lg hover:bg-primary-dark transition-colors">
-                        Pelajari Profil Lab
+                <div class="flex flex-wrap items-center gap-4">
+                    <a href="{{ route('profile') }}" class="inline-flex items-center justify-center px-6 py-3.5 bg-primary text-white font-bold rounded-lg hover:bg-primary-dark transition-colors shadow-sm">
+                        Profil Lab
                     </a>
-                    <a href="{{ route('teams.index') }}" class="inline-flex items-center justify-center px-6 py-3.5 border border-primary text-primary font-bold rounded-lg hover:bg-primary hover:text-white transition-colors">
-                        Tim Lomba KRTI
+                    <a href="#kegiatan" class="inline-flex items-center justify-center px-6 py-3.5 bg-surface text-ink font-bold rounded-lg hover:bg-canvas transition-colors shadow-sm">
+                        Kegiatan Lab
                     </a>
                 </div>
             </div>
@@ -41,7 +67,7 @@
     </section>
 
     <!-- RINGKASAN PROFIL SECTION -->
-    <section class="py-20 bg-surface border-b border-line">
+    <section id="kegiatan" class="py-20 bg-surface border-b border-line">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
                 <div class="lg:col-span-7 space-y-6">
@@ -69,17 +95,14 @@
     <!-- PREVIEW 4 DIVISI -->
     <section class="py-20 bg-canvas border-b border-line">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <x-section-heading title="4 Divisi Internal Lab" subtitle="Struktur fungsional yang bersinergi dalam perancangan wahana terbang lengkap." :centered="true" />
+            <x-section-heading title="4 Divisi Laboratorium" subtitle="Struktur fungsional yang bersinergi dalam perancangan wahana terbang lengkap." :centered="true" />
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
                 @foreach ($divisions as $div)
                     <x-card class="flex flex-col justify-between p-6 hover:border-primary transition-colors">
                         <div>
-                            <div class="w-12 h-12 rounded-lg bg-primary-light flex items-center justify-center mb-4">
-                                <span class="text-primary font-extrabold text-lg">{{ substr($div->name, 7, 1) }}</span>
-                            </div>
-                            <h3 class="text-lg font-bold text-ink mb-2">{{ $div->name }}</h3>
-                            <p class="text-sm text-body leading-relaxed mb-4">{{ $div->short_description }}</p>
+                            <h3 class="text-xl font-extrabold text-ink mb-3">{{ $div->name }}</h3>
+                            <p class="text-sm text-body leading-relaxed mb-6">{{ $div->short_description }}</p>
                         </div>
                         <a href="{{ route('divisions.show', $div->slug) }}" class="text-sm font-bold text-primary hover:text-primary-dark">
                             Detail Divisi &rarr;
