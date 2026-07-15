@@ -74,31 +74,98 @@
                 </div>
             </div>
 
-            <!-- MOBILE VERTICAL HIERARCHICAL LIST (< lg) -->
-            <div class="lg:hidden space-y-4">
-                @foreach ($members as $m)
-                    @php
-                        $indentClass = match ($m->level) {
-                            1 => '',
-                            2 => 'ml-4',
-                            3 => 'ml-8',
-                            4 => 'ml-12',
-                            default => '',
-                        };
-                    @endphp
-                    <div class="{{ $indentClass }}">
-                        <div class="bg-surface border border-line border-l-4 border-l-primary rounded p-4 flex items-center space-x-4 shadow-sm">
-                            <img src="{{ asset($m->photo_path ?: 'images/avatar-placeholder.svg') }}"
-                                 alt="{{ $m->name }}"
-                                 class="w-12 h-12 rounded-full object-cover border border-primary flex-shrink-0">
-                            <div>
-                                <h4 class="font-bold text-ink text-sm">{{ $m->name }}</h4>
-                                <p class="text-xs font-bold text-primary uppercase">{{ $m->position }}</p>
-                                <p class="text-xs text-body mt-1">{{ $m->study_program }} &bull; {{ $m->batch }}</p>
+            <!-- MOBILE / TABLET HIERARCHICAL TREE (< lg) -->
+            <div class="lg:hidden space-y-6 max-w-md mx-auto">
+                <!-- Level 1: Kapten -->
+                @if (!empty($membersByLevel[1]))
+                    <div class="space-y-4">
+                        @foreach ($membersByLevel[1] as $m)
+                            <div class="bg-surface border-2 border-primary rounded-2xl p-6 text-center shadow-md">
+                                <img src="{{ asset($m->photo_path ?: 'images/avatar-placeholder.svg') }}"
+                                     alt="{{ $m->name }}"
+                                     class="w-24 h-24 rounded-full object-cover object-top border-4 border-primary mx-auto mb-4 shadow-sm">
+                                <h4 class="font-extrabold text-ink text-lg">{{ $m->name }}</h4>
+                                <p class="text-sm font-bold text-primary uppercase tracking-wide mt-1">{{ $m->position }}</p>
+                                <p class="text-xs text-body mt-2 border-t border-line pt-2">{{ $m->study_program }} &bull; Angkatan {{ $m->batch }}</p>
                             </div>
-                        </div>
+                        @endforeach
                     </div>
-                @endforeach
+                    <!-- Garis Penghubung -->
+                    <div class="h-8 w-0.5 bg-primary mx-auto"></div>
+                @endif
+
+                <!-- Level 2: Wakil Kapten -->
+                @if (!empty($membersByLevel[2]))
+                    <div class="text-center">
+                        <span class="inline-block px-3 py-1 bg-primary/10 text-primary rounded-full text-xs font-bold uppercase tracking-wider mb-3">
+                            Wakil Kapten
+                        </span>
+                    </div>
+                    <div class="space-y-4">
+                        @foreach ($membersByLevel[2] as $m)
+                            <div class="bg-surface border border-line border-l-4 border-l-primary rounded-xl p-4 flex items-center space-x-4 shadow-sm hover:border-primary transition-colors">
+                                <img src="{{ asset($m->photo_path ?: 'images/avatar-placeholder.svg') }}"
+                                     alt="{{ $m->name }}"
+                                     class="w-16 h-16 rounded-full object-cover object-top border-2 border-primary flex-shrink-0 shadow-sm">
+                                <div class="flex-grow min-w-0">
+                                    <h4 class="font-bold text-ink text-base leading-snug">{{ $m->name }}</h4>
+                                    <p class="text-xs font-bold text-primary uppercase tracking-wider mt-0.5">{{ $m->position }}</p>
+                                    <p class="text-xs text-body mt-1 truncate">{{ $m->study_program }} &bull; {{ $m->batch }}</p>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                    <!-- Garis Penghubung -->
+                    <div class="h-8 w-0.5 bg-primary mx-auto"></div>
+                @endif
+
+                <!-- Level 3: Sekretaris & Bendahara -->
+                @if (!empty($membersByLevel[3]))
+                    <div class="text-center">
+                        <span class="inline-block px-3 py-1 bg-primary/10 text-primary rounded-full text-xs font-bold uppercase tracking-wider mb-3">
+                            Sekretaris &amp; Bendahara
+                        </span>
+                    </div>
+                    <div class="space-y-4">
+                        @foreach ($membersByLevel[3] as $m)
+                            <div class="bg-surface border border-line border-l-4 border-l-primary rounded-xl p-4 flex items-center space-x-4 shadow-sm hover:border-primary transition-colors">
+                                <img src="{{ asset($m->photo_path ?: 'images/avatar-placeholder.svg') }}"
+                                     alt="{{ $m->name }}"
+                                     class="w-16 h-16 rounded-full object-cover object-top border-2 border-primary flex-shrink-0 shadow-sm">
+                                <div class="flex-grow min-w-0">
+                                    <h4 class="font-bold text-ink text-base leading-snug">{{ $m->name }}</h4>
+                                    <p class="text-xs font-bold text-primary uppercase tracking-wider mt-0.5">{{ $m->position }}</p>
+                                    <p class="text-xs text-body mt-1 truncate">{{ $m->study_program }} &bull; {{ $m->batch }}</p>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                    <!-- Garis Penghubung -->
+                    <div class="h-8 w-0.5 bg-primary mx-auto"></div>
+                @endif
+
+                <!-- Level 4: Koordinator Divisi -->
+                @if (!empty($membersByLevel[4]))
+                    <div class="text-center">
+                        <span class="inline-block px-3 py-1 bg-primary/10 text-primary rounded-full text-xs font-bold uppercase tracking-wider mb-3">
+                            Koordinator Divisi
+                        </span>
+                    </div>
+                    <div class="space-y-4">
+                        @foreach ($membersByLevel[4] as $m)
+                            <div class="bg-surface border border-line border-l-4 border-l-primary rounded-xl p-4 flex items-center space-x-4 shadow-sm hover:border-primary transition-colors">
+                                <img src="{{ asset($m->photo_path ?: 'images/avatar-placeholder.svg') }}"
+                                     alt="{{ $m->name }}"
+                                     class="w-16 h-16 rounded-full object-cover object-top border-2 border-primary flex-shrink-0 shadow-sm">
+                                <div class="flex-grow min-w-0">
+                                    <h4 class="font-bold text-ink text-base leading-snug">{{ $m->name }}</h4>
+                                    <p class="text-xs font-bold text-primary uppercase tracking-wider mt-0.5">{{ $m->position }}</p>
+                                    <p class="text-xs text-body mt-1 truncate">{{ $m->study_program }} &bull; {{ $m->batch }}</p>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
             </div>
         </div>
     </section>
