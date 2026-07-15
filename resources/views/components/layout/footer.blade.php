@@ -1,5 +1,6 @@
-<footer class="bg-ink text-white border-t border-line mt-20">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+@props(['fullpage' => false])
+<footer class="bg-ink text-white border-t border-line {{ ($fullpage || request()->routeIs('home')) ? 'mt-0 w-full' : 'mt-20' }}">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 w-full">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
             <!-- Brand Info -->
             <div class="space-y-4">

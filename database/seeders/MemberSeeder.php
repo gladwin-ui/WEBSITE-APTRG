@@ -5,11 +5,16 @@ namespace Database\Seeders;
 use App\Models\Division;
 use App\Models\Member;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Schema;
 
 class MemberSeeder extends Seeder
 {
     public function run(): void
     {
+        Schema::disableForeignKeyConstraints();
+        Member::truncate();
+        Schema::enableForeignKeyConstraints();
+
         $divMekanik = Division::where('slug', 'mekanik')->first();
         $divSistem  = Division::where('slug', 'sistem')->first();
         $divGcs     = Division::where('slug', 'gcs')->first();
@@ -17,58 +22,58 @@ class MemberSeeder extends Seeder
 
         // Level 1: Kapten
         $kapten = Member::create([
-            'name' => 'Muhammad Arya Pratama',
+            'name' => 'Patar Idaon Situmorang',
             'position' => 'Kapten',
             'level' => 1,
             'parent_id' => null,
             'division_id' => null,
             'study_program' => 'S1 Teknik Telekomunikasi',
-            'batch' => '2022',
+            'batch' => '2023',
             'photo_path' => 'images/avatar-placeholder.svg',
             'order' => 1,
         ]);
 
-        // Level 2: Wakil Kapten Internal & Eksternal
+        // Level 2: Wakil Internal & Eksternal
         $wakilInternal = Member::create([
-            'name' => 'Rizki Akbar Ramadhan',
-            'position' => 'Wakil Kapten Internal',
+            'name' => 'Richo Alifian Nokie',
+            'position' => 'Wakil Internal',
             'level' => 2,
             'parent_id' => $kapten->id,
             'division_id' => null,
-            'study_program' => 'S1 Teknik Elektro',
-            'batch' => '2022',
+            'study_program' => 'S1 Teknik Telekomunikasi',
+            'batch' => '2023',
             'photo_path' => 'images/avatar-placeholder.svg',
             'order' => 1,
         ]);
 
         $wakilEksternal = Member::create([
-            'name' => 'Faisal Kurniawan Putra',
-            'position' => 'Wakil Kapten Eksternal',
+            'name' => 'Rega Arzula Akbar',
+            'position' => 'Wakil Eksternal',
             'level' => 2,
             'parent_id' => $kapten->id,
             'division_id' => null,
-            'study_program' => 'S1 Teknik Telekomunikasi',
-            'batch' => '2022',
+            'study_program' => 'S1 Teknik Elektro',
+            'batch' => '2023',
             'photo_path' => 'images/avatar-placeholder.svg',
             'order' => 2,
         ]);
 
         // Level 3: Sekretaris & Bendahara (parent ke Wakil Internal)
         Member::create([
-            'name' => 'Nabila Putri Zahra',
-            'position' => 'Sekretaris',
+            'name' => 'Natan Setiabudi',
+            'position' => 'Sekretaris 1',
             'level' => 3,
             'parent_id' => $wakilInternal->id,
             'division_id' => null,
-            'study_program' => 'S1 Teknik Telekomunikasi',
+            'study_program' => 'S1 Teknik Elektro',
             'batch' => '2023',
             'photo_path' => 'images/avatar-placeholder.svg',
             'order' => 1,
         ]);
 
         Member::create([
-            'name' => 'Aulia Rahmawati',
-            'position' => 'Bendahara',
+            'name' => 'Serly Marleny',
+            'position' => 'Sekretaris 2',
             'level' => 3,
             'parent_id' => $wakilInternal->id,
             'division_id' => null,
@@ -76,6 +81,30 @@ class MemberSeeder extends Seeder
             'batch' => '2023',
             'photo_path' => 'images/avatar-placeholder.svg',
             'order' => 2,
+        ]);
+
+        Member::create([
+            'name' => 'Muhammad Luthfi Tukhfattur Romadhoni',
+            'position' => 'Bendahara 1',
+            'level' => 3,
+            'parent_id' => $wakilInternal->id,
+            'division_id' => null,
+            'study_program' => 'S1 Sistem Informasi',
+            'batch' => '2023',
+            'photo_path' => 'images/avatar-placeholder.svg',
+            'order' => 3,
+        ]);
+
+        Member::create([
+            'name' => 'Ersha Anandita Larasati',
+            'position' => 'Bendahara 2',
+            'level' => 3,
+            'parent_id' => $wakilInternal->id,
+            'division_id' => null,
+            'study_program' => 'S1 Teknik Elektro',
+            'batch' => '2023',
+            'photo_path' => 'images/avatar-placeholder.svg',
+            'order' => 4,
         ]);
 
         // Level 4: Koordinator Divisi (parent ke Wakil Eksternal)

@@ -113,7 +113,7 @@ class CompetitionTeamSeeder extends Seeder
         ];
 
         foreach ($teams as $team) {
-            CompetitionTeam::create($team);
+            CompetitionTeam::updateOrCreate(['slug' => $team['slug']], $team);
         }
     }
 }

@@ -130,7 +130,10 @@ class AchievementSeeder extends Seeder
         ];
 
         foreach ($achievements as $achievement) {
-            Achievement::create($achievement);
+            Achievement::updateOrCreate([
+                'title' => $achievement['title'],
+                'year' => $achievement['year'],
+            ], $achievement);
         }
     }
 }

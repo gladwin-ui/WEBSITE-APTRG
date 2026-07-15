@@ -7,3 +7,21 @@
         @apply bg-canvas text-ink font-sans antialiased;
     }
 }
+
+/* Sembunyikan scrollbar untuk tampilan slide yang bersih */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.no-scrollbar {
+    -ms-overflow-style: none;   /* IE / Edge lama */
+    scrollbar-width: none;      /* Firefox */
+}
+
+/* Fade-in ringan saat section muncul (opsional, meniru referensi) */
+.fade-in {
+    animation: fadeIn 0.9s ease-out forwards;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}

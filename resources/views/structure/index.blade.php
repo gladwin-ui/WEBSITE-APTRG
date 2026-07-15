@@ -29,7 +29,7 @@
                     <div class="absolute left-3/4 top-0 h-8 w-0.5 bg-primary -translate-x-1/2"></div>
                 </div>
 
-                <!-- Baris 2: Wakil Kapten Internal & Eksternal (Level 2) -->
+                <!-- Baris 2: Wakil Internal & Eksternal (Level 2) -->
                 <div class="max-w-5xl mx-auto grid grid-cols-2 gap-12">
                     @foreach ($membersByLevel[2] ?? [] as $m)
                         <div class="flex flex-col items-center">
@@ -50,7 +50,7 @@
                         </div>
                         <div class="grid grid-cols-2 gap-4">
                             @foreach ($membersByLevel[3] ?? [] as $m)
-                                <x-org-node :member="$m" />
+                                <x-org-node :member="$m" class="w-full" />
                             @endforeach
                         </div>
                     </div>
@@ -94,11 +94,11 @@
                     <div class="h-8 w-0.5 bg-primary mx-auto"></div>
                 @endif
 
-                <!-- Level 2: Wakil Kapten -->
+                <!-- Level 2: Wakil Internal & Eksternal -->
                 @if (!empty($membersByLevel[2]))
                     <div class="text-center">
                         <span class="inline-block px-3 py-1 bg-primary/10 text-primary rounded-full text-xs font-bold uppercase tracking-wider mb-3">
-                            Wakil Kapten
+                            Wakil Internal &amp; Eksternal
                         </span>
                     </div>
                     <div class="space-y-4">

@@ -1,5 +1,6 @@
+@props(['fullpage' => false])
 @php
-    $isHome = request()->routeIs('home');
+    $isHome = request()->routeIs('home') || $fullpage;
     $links = [
         ['name' => 'Beranda', 'route' => 'home', 'active' => request()->routeIs('home')],
         ['name' => 'Profil', 'route' => 'profile', 'active' => request()->routeIs('profile')],
@@ -11,7 +12,13 @@
 @endphp
 
 <nav x-data="{ mobileMenuOpen: false, scrolled: false }"
-     @scroll.window="scrolled = (window.pageYOffset > 40)"
+     x-init="
+        const mainEl = document.querySelector('main');
+        if (mainEl) {
+            mainEl.addEventListener('scroll', () => { scrolled = (mainEl.scrollTop > 40); });
+        }
+     "
+     @scroll.window="scrolled = (window.pageYOffset > 40 || (document.querySelector('main') && document.querySelector('main').scrollTop > 40))"
      class="{{ $isHome ? 'fixed top-0 inset-x-0' : 'sticky top-0' }} z-50 transition-all duration-300"
      :class="{
          'bg-surface border-b border-line shadow-sm': scrolled || !{{ $isHome ? 'true' : 'false' }},
