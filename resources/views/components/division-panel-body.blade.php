@@ -22,15 +22,15 @@
     {{-- KONTEN: ikon/nomor di atas, SEMUA teks menyatu di bawah --}}
     <div class="relative flex h-full flex-col p-6 text-white md:p-8">
 
-        {{-- ATAS: hanya ikon + nomor --}}
-        <div class="flex items-start justify-between">
+        {{-- ATAS: hanya ikon + nomor (hanya tampil di desktop) --}}
+        <div class="hidden md:flex items-start justify-between">
             <x-division-icon :name="$division->icon" class="h-8 w-8" />
             <span class="text-4xl font-bold leading-none md:text-5xl">{{ str_pad($division->order, 2, '0', STR_PAD_LEFT) }}</span>
         </div>
 
         {{-- BAWAH: judul + deskripsi + tanggung jawab + koordinator (SATU blok) --}}
         <div class="mt-auto">
-            <h3 class="text-2xl font-bold md:text-3xl">{{ $division->name }}</h3>
+            <h3 class="text-2xl font-bold md:text-3xl uppercase tracking-wide">{{ str_ireplace('divisi ', '', $division->name) }}</h3>
             <p class="mt-2 max-w-md text-sm leading-relaxed text-white/85">{{ $division->short_description }}</p>
 
             <ul class="mt-4 space-y-1.5">
@@ -41,23 +41,7 @@
                 @endforeach
             </ul>
 
-            <div class="mt-5 flex items-center justify-between border-t border-white/25 pt-4">
-                @if ($c)
-                    <div class="flex items-center gap-2.5">
-                        @if ($c->photo_path)
-                            <img src="{{ asset($c->photo_path) }}" alt="{{ $c->name }}" loading="lazy" decoding="async" class="h-8 w-8 rounded-full object-cover object-top ring-2 ring-white/70">
-                        @else
-                            <span class="flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-[11px] font-bold text-primary-dark">{{ $c->initials }}</span>
-                        @endif
-                        <div class="leading-tight">
-                            <div class="text-xs font-semibold">{{ $c->name }}</div>
-                            <div class="text-[11px] text-white/70">Koordinator</div>
-                        </div>
-                    </div>
-                @else
-                    <span></span>
-                @endif
-
+            <div class="mt-5 flex items-center justify-end border-t border-white/25 pt-4">
                 <a href="{{ route('divisions.show', $division->slug) }}"
                    class="inline-flex items-center gap-1.5 rounded-full bg-white px-4 py-2 text-xs font-semibold text-primary hover:bg-white/90">
                     Detail

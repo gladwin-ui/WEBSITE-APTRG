@@ -140,7 +140,7 @@ class MemberSeeder extends Seeder
             'division_id' => $divGcs?->id,
             'study_program' => 'S1 Teknik Telekomunikasi',
             'batch' => '2023',
-            'photo_path' => 'images/avatar-placeholder.svg',
+            'photo_path' => 'images/koor-gcs.webp',
             'order' => 3,
         ]);
 

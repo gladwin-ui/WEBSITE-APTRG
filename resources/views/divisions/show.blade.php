@@ -41,7 +41,7 @@
             <div class="shrink-0">
                 <img src="{{ $coordinator->photo_path ? asset($coordinator->photo_path) : asset('images/avatar-placeholder.svg') }}"
                      alt="{{ $coordinator->name }}"
-                     class="h-32 w-32 rounded-full border-4 border-primary object-cover object-top md:h-40 md:w-40 shadow-md">
+                     class="h-32 w-32 rounded-full border-4 border-primary object-cover object-center md:h-40 md:w-40 shadow-md">
             </div>
             {{-- IDENTITAS --}}
             <div class="min-w-0">
@@ -88,17 +88,26 @@
                 <div class="rounded-xl border border-line bg-surface p-5 shadow-sm">
                     <h3 class="mb-4 text-sm font-bold uppercase tracking-wide text-primary">Sekilas Divisi</h3>
                     <dl class="space-y-3 text-sm">
+                        @php
+                            $memberCount = match($division->slug) {
+                                'mekanik' => 6,
+                                'sistem' => 7,
+                                'gcs' => 4,
+                                'non-technical' => 5,
+                                default => 0
+                            };
+                        @endphp
+                        <div class="flex items-center justify-between border-b border-line pb-3">
+                            <dt class="text-body">Jumlah Anggota</dt>
+                            <dd class="font-semibold text-ink">{{ $memberCount }} Orang</dd>
+                        </div>
                         <div class="flex items-center justify-between border-b border-line pb-3">
                             <dt class="text-body">Jumlah tanggung jawab</dt>
                             <dd class="font-semibold text-ink">{{ count($responsibilities) }}</dd>
                         </div>
-                        <div class="flex items-center justify-between border-b border-line pb-3">
+                        <div class="flex items-center justify-between">
                             <dt class="text-body">Koordinator</dt>
                             <dd class="font-semibold text-ink text-right">{{ $coordinator?->name ?? '—' }}</dd>
-                        </div>
-                        <div class="flex items-center justify-between">
-                            <dt class="text-body">Bagian dari</dt>
-                            <dd class="font-semibold text-ink">APTRG</dd>
                         </div>
                     </dl>
                 </div>

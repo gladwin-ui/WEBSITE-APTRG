@@ -39,13 +39,19 @@
     </div>
 
     {{-- ============ MOBILE: ACCORDION VERTIKAL (di bawah md) ============ --}}
-    <div x-data="{ active: 0 }" x-cloak class="flex flex-col gap-3 md:hidden">
+    <div x-data="{
+            active: -1,
+            toggle(i) {
+                this.active = this.active === i ? -1 : i;
+            }
+         }"
+         x-cloak class="flex flex-col gap-3 md:hidden">
         @foreach ($divisions as $division)
             @php $i = $loop->index; @endphp
-            <div class="overflow-hidden rounded-xl border border-line transition-colors"
+            <div class="overflow-hidden rounded-xl border border-line transition-colors duration-300"
                  :class="active === {{ $i }} ? 'bg-primary' : 'bg-surface'">
 
-                <button type="button" @click="active = (active === {{ $i }} ? -1 : {{ $i }})"
+                <button type="button" @click="toggle({{ $i }})"
                     class="flex w-full items-center gap-3 p-4 text-left">
                     <x-division-icon :name="$division->icon" class="h-6 w-6"
                         ::class="active === {{ $i }} ? 'text-white' : 'text-primary'" />
@@ -53,12 +59,19 @@
                           :class="active === {{ $i }} ? 'text-white' : 'text-ink'">{{ $division->name }}</span>
                     <span class="text-sm font-bold"
                           :class="active === {{ $i }} ? 'text-white/70' : 'text-body/40'">{{ str_pad($division->order, 2, '0', STR_PAD_LEFT) }}</span>
-                    <svg class="h-5 w-5 transition-transform" :class="active === {{ $i }} ? 'rotate-180 text-white' : 'text-body'"
+                    <svg class="h-5 w-5 transition-transform duration-300" :class="active === {{ $i }} ? 'rotate-180 text-white' : 'text-body'"
                          fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/></svg>
                 </button>
 
-                <div x-show="active === {{ $i }}" x-transition class="px-4 pb-5">
-                    <x-division-panel-body :division="$division" />
+                {{-- Panel body dengan max-height transition untuk animasi smooth --}}
+                <div x-ref="panel{{ $i }}"
+                     class="overflow-hidden transition-[max-height,opacity] duration-500 ease-in-out"
+                     :style="active === {{ $i }}
+                         ? 'max-height: ' + ($refs.panel{{ $i }}.scrollHeight) + 'px; opacity: 1;'
+                         : 'max-height: 0px; opacity: 0;'">
+                    <div class="px-4 pb-5">
+                        <x-division-panel-body :division="$division" />
+                    </div>
                 </div>
             </div>
         @endforeach

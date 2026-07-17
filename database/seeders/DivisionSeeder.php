@@ -54,7 +54,7 @@ class DivisionSeeder extends Seeder
                     'Menyimpan data untuk keperluan analisis',
                 ],
                 'icon' => 'signal',
-                'image_path' => 'images/bg-hero-1.webp',
+                'image_path' => 'images/foto-gcs.webp',
                 'order' => 3,
             ],
             [
