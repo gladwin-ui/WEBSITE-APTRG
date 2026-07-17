@@ -8,7 +8,8 @@
     </div>
 
     {{-- ============ DESKTOP: ACCORDION HORIZONTAL (md ke atas) ============ --}}
-    <div x-data="{ active: 0 }" x-cloak
+    <div x-data="{ active: -1 }" x-cloak
+         @mouseleave="active = -1"
          class="hidden gap-3 md:flex"
          style="height: 72vh; min-height: 540px;">
 
@@ -17,7 +18,7 @@
             <div
                 @mouseenter="active = {{ $i }}"
                 @click="active = {{ $i }}"
-                :style="{ flexGrow: active === {{ $i }} ? 6 : 0 }"
+                :style="{ flexGrow: active === {{ $i }} ? 6 : (active === -1 ? 1 : 0) }"
                 style="flex-basis: 80px;"
                 class="relative cursor-pointer overflow-hidden rounded-xl border border-line transition-[flex-grow] duration-500 ease-in-out"
                 :class="active === {{ $i }} ? 'bg-primary' : 'bg-surface hover:border-primary'">
@@ -28,10 +29,10 @@
                 </div>
 
                 {{-- Strip nonaktif --}}
-                <div x-show="active !== {{ $i }}" class="flex h-full flex-col items-center justify-between py-6">
-                    <span class="text-xl font-bold text-body/40">{{ str_pad($division->order, 2, '0', STR_PAD_LEFT) }}</span>
-                    <x-division-icon :name="$division->icon" class="h-6 w-6 text-primary" />
-                    <span class="whitespace-nowrap text-sm tracking-wider text-body"
+                <div x-show="active !== {{ $i }}" class="grid grid-rows-3 h-full w-full items-center justify-items-center py-6">
+                    <x-division-icon :name="$division->icon" class="h-6 w-6 text-primary self-start" />
+                    <div></div>
+                    <span class="whitespace-nowrap text-sm tracking-wider text-body self-end"
                           style="writing-mode: vertical-rl; transform: rotate(180deg);">{{ $division->name }}</span>
                 </div>
             </div>
