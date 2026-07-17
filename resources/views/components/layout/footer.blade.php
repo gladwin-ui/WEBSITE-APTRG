@@ -5,7 +5,7 @@
             <!-- Brand Info -->
             <div class="space-y-4">
                 <div class="flex items-center space-x-3">
-                    <img src="{{ asset('images/logo-aptrg.png') }}" alt="APTRG Logo" class="h-10 w-10 rounded-full object-contain bg-white p-0.5">
+                    <img src="{{ asset('images/logo-aptrg.svg') }}" alt="APTRG Logo" loading="lazy" decoding="async" class="h-10 w-10 rounded-full object-contain bg-white p-0.5">
                     <div>
                         <span class="text-lg font-bold tracking-tight text-white">APTRG</span>
                         <span class="block text-xs font-medium text-line">Telkom University</span>
@@ -28,7 +28,7 @@
                     <li><a href="{{ route('home') }}" class="hover:text-white transition-colors">Beranda</a></li>
                     <li><a href="{{ route('profile') }}" class="hover:text-white transition-colors">Profil & Visi Misi</a></li>
                     <li><a href="{{ route('divisions.index') }}" class="hover:text-white transition-colors">Divisi Laboratorium</a></li>
-                    <li><a href="{{ route('teams.index') }}" class="hover:text-white transition-colors">Tim Lomba KRTI</a></li>
+                    <li><a href="{{ route('teams.index') }}" class="hover:text-white transition-colors">Tim Lomba</a></li>
                     <li><a href="{{ route('achievements.index') }}" class="hover:text-white transition-colors">Prestasi Lab</a></li>
                     <li><a href="{{ route('structure') }}" class="hover:text-white transition-colors">Struktur Kepengurusan</a></li>
                 </ul>

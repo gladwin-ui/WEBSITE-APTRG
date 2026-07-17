@@ -72,7 +72,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <x-section-heading title="Fokus Riset Utama" subtitle="Bidang spesialisasi riset multidisiplin yang dikembangkan di Laboratorium APTRG." :centered="true" />
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-10">
                 @foreach ($profile->research_focus as $focus)
                     <x-card class="p-6 text-center hover:border-primary transition-colors">
                         <div class="w-12 h-12 rounded-full bg-primary text-white font-bold flex items-center justify-center mx-auto mb-4">

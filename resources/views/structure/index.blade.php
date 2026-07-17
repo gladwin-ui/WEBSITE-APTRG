@@ -83,6 +83,7 @@
                             <div class="bg-surface border-2 border-primary rounded-2xl p-6 text-center shadow-md">
                                 <img src="{{ asset($m->photo_path ?: 'images/avatar-placeholder.svg') }}"
                                      alt="{{ $m->name }}"
+                                     loading="lazy" decoding="async"
                                      class="w-24 h-24 rounded-full object-cover object-top border-4 border-primary mx-auto mb-4 shadow-sm">
                                 <h4 class="font-extrabold text-ink text-lg">{{ $m->name }}</h4>
                                 <p class="text-sm font-bold text-primary uppercase tracking-wide mt-1">{{ $m->position }}</p>
@@ -106,6 +107,7 @@
                             <div class="bg-surface border border-line border-l-4 border-l-primary rounded-xl p-4 flex items-center space-x-4 shadow-sm hover:border-primary transition-colors">
                                 <img src="{{ asset($m->photo_path ?: 'images/avatar-placeholder.svg') }}"
                                      alt="{{ $m->name }}"
+                                     loading="lazy" decoding="async"
                                      class="w-16 h-16 rounded-full object-cover object-top border-2 border-primary flex-shrink-0 shadow-sm">
                                 <div class="flex-grow min-w-0">
                                     <h4 class="font-bold text-ink text-base leading-snug">{{ $m->name }}</h4>
@@ -131,6 +133,7 @@
                             <div class="bg-surface border border-line border-l-4 border-l-primary rounded-xl p-4 flex items-center space-x-4 shadow-sm hover:border-primary transition-colors">
                                 <img src="{{ asset($m->photo_path ?: 'images/avatar-placeholder.svg') }}"
                                      alt="{{ $m->name }}"
+                                     loading="lazy" decoding="async"
                                      class="w-16 h-16 rounded-full object-cover object-top border-2 border-primary flex-shrink-0 shadow-sm">
                                 <div class="flex-grow min-w-0">
                                     <h4 class="font-bold text-ink text-base leading-snug">{{ $m->name }}</h4>
@@ -156,6 +159,7 @@
                             <div class="bg-surface border border-line border-l-4 border-l-primary rounded-xl p-4 flex items-center space-x-4 shadow-sm hover:border-primary transition-colors">
                                 <img src="{{ asset($m->photo_path ?: 'images/avatar-placeholder.svg') }}"
                                      alt="{{ $m->name }}"
+                                     loading="lazy" decoding="async"
                                      class="w-16 h-16 rounded-full object-cover object-top border-2 border-primary flex-shrink-0 shadow-sm">
                                 <div class="flex-grow min-w-0">
                                     <h4 class="font-bold text-ink text-base leading-snug">{{ $m->name }}</h4>

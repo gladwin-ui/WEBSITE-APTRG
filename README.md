@@ -144,6 +144,9 @@ Instagram Resmi: **@aptrg**
 | **8 Halaman Publik Lengkap** | ✅ Selesai | Semua route diuji dan dapat diakses dengan desain responsif |
 | **Filter Prestasi Interaktif Client-Side** | ✅ Selesai | Filter berdasarkan tahun dan kompetisi memakai Alpine.js tanpa reload |
 | **Org Chart Tree CSS Murni** | ✅ Selesai | Bagan vertikal di desktop dan list bertingkat di mobile |
+| **Halaman Divisi → accordion full-height interaktif (Alpine)** | ✅ Selesai | Desktop: 4 panel accordion horizontal ~78vh, hover/klik memperlebar panel aktif (animasi 500ms) berisi ikon + nomor + judul + deskripsi + 3 tanggung jawab + koordinator + tombol Detail; panel nonaktif jadi strip (nomor + ikon + nama vertikal). **Mobile fallback**: berubah jadi accordion vertikal yang membuka ke bawah |
+| **Redesign halaman detail Divisi** | ✅ Selesai | Hero menyatu + overlay solid, spotlight koordinator menimpa hero, body 2 kolom (konten + sidebar sticky), tanggung jawab list garis merah, galeri variatif |
+| **Lazy loading gambar** | ✅ Selesai | Native `loading="lazy"` + `decoding="async"` pada foto below-the-fold (galeri, org chart, kartu tim); hero divisi tetap eager + `fetchpriority="high"` |
 
 ---
 
@@ -157,6 +160,14 @@ Instagram Resmi: **@aptrg**
 ---
 
 ## 📝 Changelog
+
+### v1.1.0 (17 Juli 2026)
+- Redesign kartu halaman `/divisi` menjadi **split card**: panel merah flat solid `#C1121F` di kiri (ikon khas divisi + nomor urut 2 digit), konten di kanan (judul, deskripsi singkat, chip tanggung jawab maks 3 + "+N lainnya", link "Lihat detail" dengan panah bergeser saat hover).
+- Komponen baru: `x-division-icon` (inline SVG heroicons outline: wrench / cpu / signal / megaphone) dan `x-division-card`.
+- Seeder divisi diperbarui: kolom `icon` memakai key `wrench`, `cpu`, `signal`, `megaphone`; `image_path` diarahkan ke foto asli divisi.
+- Redesign halaman detail `/divisi/{slug}`: hero menyatu dengan overlay solid, **spotlight koordinator** menimpa tepi bawah hero, body dua kolom (konten + sidebar "Sekilas Divisi" sticky), tanggung jawab jadi list beraksen garis merah, dan galeri variatif (1 foto utama + 2 thumbnail).
+- **Lazy loading gambar** di seluruh site: atribut native `loading="lazy"` + `decoding="async"` pada gambar below-the-fold (galeri divisi, ilustrasi wahana, foto org chart struktur, logo kartu tim, footer). Gambar hero divisi tetap eager dengan `fetchpriority="high"` agar tampil instan. Tanpa library/JS eksternal.
+- **Halaman `/divisi` dirombak jadi accordion full-height interaktif** (Alpine.js): 4 panel horizontal ~78vh di desktop yang melebar saat hover/klik dengan animasi `transition-[flex-grow]` 500ms, dan **fallback accordion vertikal** di mobile. Komponen baru `x-division-panel-body`; relasi `Division::coordinator()` (Member level 4) + accessor `Member::initials` untuk avatar fallback inisial. Komponen `x-division-card` yang lama dihapus (tidak terpakai).
 
 ### v1.0.0 (13 Juli 2026)
 - Pembangunan awal website profil Laboratorium APTRG Telkom University berbasis Laravel 11 + Tailwind CSS v3 + Alpine.js.

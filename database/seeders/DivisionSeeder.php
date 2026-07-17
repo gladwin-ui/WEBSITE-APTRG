@@ -23,7 +23,7 @@ class DivisionSeeder extends Seeder
                     'Menjadi pilot dan operator wahana',
                 ],
                 'icon' => 'wrench',
-                'image_path' => 'images/placeholder-division.svg',
+                'image_path' => 'images/foto-mekanik.webp',
                 'order' => 1,
             ],
             [
@@ -37,13 +37,13 @@ class DivisionSeeder extends Seeder
                     'Menentukan konfigurasi sistem autonomous',
                     'Power budget, sistem elektronika, dan integrasi sensor',
                 ],
-                'icon' => 'cpu-chip',
-                'image_path' => 'images/placeholder-division.svg',
+                'icon' => 'cpu',
+                'image_path' => 'images/foto-sistem.webp',
                 'order' => 2,
             ],
             [
                 'slug' => 'gcs',
-                'name' => 'Divisi GCS (Ground Control Station)',
+                'name' => 'Divisi Ground Control Station',
                 'short_description' => 'Pusat kendali darat dan pengolahan data penerbangan.',
                 'description' => 'Divisi yang menyediakan fasilitas kendali wahana autopilot dari darat, mengirim command, serta menerjemahkan data telemetri menjadi visualisasi yang mudah dipahami.',
                 'responsibilities' => [
@@ -53,8 +53,8 @@ class DivisionSeeder extends Seeder
                     'Menerjemahkan data menjadi grafik/tampilan',
                     'Menyimpan data untuk keperluan analisis',
                 ],
-                'icon' => 'computer-desktop',
-                'image_path' => 'images/placeholder-division.svg',
+                'icon' => 'signal',
+                'image_path' => 'images/bg-hero-1.webp',
                 'order' => 3,
             ],
             [
@@ -69,8 +69,8 @@ class DivisionSeeder extends Seeder
                     'Unit manager dan branding lab',
                     'Pengelolaan media sosial dan kerja sama',
                 ],
-                'icon' => 'users',
-                'image_path' => 'images/placeholder-division.svg',
+                'icon' => 'megaphone',
+                'image_path' => 'images/foto-nontech.webp',
                 'order' => 4,
             ],
         ];

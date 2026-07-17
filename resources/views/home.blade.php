@@ -5,32 +5,15 @@
 
         {{-- SECTION 1: HERO --}}
         <section id="hero"
-            class="h-screen w-full snap-start flex items-center justify-center relative bg-ink text-white border-b border-line"
-            x-data="{ activeSlide: 1 }"
-            x-init="setInterval(() => { activeSlide = activeSlide === 1 ? 2 : 1 }, 6000)">
-            <!-- Background Images -->
+            class="h-screen w-full snap-start flex items-center justify-center relative bg-ink text-white border-b border-line overflow-hidden">
+            <!-- Background Video -->
             <div class="absolute inset-0 z-0">
-                <img src="{{ asset('images/bg-hero-1.jpg') }}" alt="APTRG Landing Background 1"
-                     fetchpriority="high"
-                     loading="eager"
-                     x-show="activeSlide === 1"
-                     x-transition:enter="transition ease-out duration-1000"
-                     x-transition:enter-start="opacity-0 scale-105"
-                     x-transition:enter-end="opacity-100 scale-100"
-                     x-transition:leave="transition ease-in duration-1000"
-                     x-transition:leave-start="opacity-100"
-                     x-transition:leave-end="opacity-0"
-                     class="w-full h-full object-cover object-top absolute inset-0">
-                <img src="{{ asset('images/bg-hero-2.jpg') }}" alt="APTRG Landing Background 2"
-                     x-show="activeSlide === 2"
-                     x-cloak
-                     x-transition:enter="transition ease-out duration-1000"
-                     x-transition:enter-start="opacity-0 scale-105"
-                     x-transition:enter-end="opacity-100 scale-100"
-                     x-transition:leave="transition ease-in duration-1000"
-                     x-transition:leave-start="opacity-100"
-                     x-transition:leave-end="opacity-0"
-                     class="w-full h-full object-cover object-top absolute inset-0">
+                <video autoplay loop muted playsinline class="w-full h-full object-cover object-center absolute inset-0">
+                    <source src="/media/stream/buat-web-juga.mp4" type="video/mp4">
+                    <source src="/videos/buat-web-juga.mp4" type="video/mp4">
+                    <source src="/images/buat-web-juga.mp4" type="video/mp4">
+                    <source src="{{ asset('videos/buat-web-juga.mp4') }}" type="video/mp4">
+                </video>
                 <!-- Flat Solid Overlay (NO GRADIENT) -->
                 <div class="absolute inset-0 bg-ink/60"></div>
             </div>
@@ -86,7 +69,7 @@
                     </div>
                     <div class="lg:col-span-5">
                         <div class="bg-canvas border border-line p-6 sm:p-8 rounded-xl text-center shadow-sm">
-                            <img src="{{ asset('images/logo-aptrg.png') }}" alt="APTRG Logo" class="w-32 sm:w-40 h-32 sm:h-40 mx-auto rounded-full object-contain shadow-sm mb-4">
+                            <img src="{{ asset('images/logo-aptrg.svg') }}" alt="APTRG Logo" loading="lazy" decoding="async" class="w-32 sm:w-40 h-32 sm:h-40 mx-auto rounded-full object-contain shadow-sm mb-4">
                             <h3 class="text-lg sm:text-xl font-bold text-ink">{{ $profile?->name }}</h3>
                             <p class="text-xs sm:text-sm font-semibold text-primary mt-1">{{ $profile?->faculty }}</p>
                         </div>
@@ -97,7 +80,7 @@
                 <div class="pt-8 sm:pt-10 border-t border-line">
                     <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
                         <x-stat :value="$stats['divisions_count']" label="Divisi Internal" />
-                        <x-stat :value="$stats['teams_count']" label="Tim Lomba KRTI" />
+                        <x-stat :value="$stats['teams_count']" label="Tim Lomba" />
                         <x-stat :value="$stats['achievements_count'] . '+'" label="Prestasi Meraih Juara" />
                         <x-stat :value="$stats['established_year']" label="Tahun Berdiri" />
                     </div>
@@ -109,7 +92,7 @@
         <section id="divisi-tim"
             class="min-h-screen w-full snap-start flex flex-col justify-center py-16 bg-canvas border-b border-line">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full my-auto fade-in">
-                <x-section-heading title="Divisi Riset & Tim Lomba KRTI" subtitle="Empat divisi internal laboratorium dan lima tim kompetisi Kontes Robot Terbang Indonesia." :centered="true" />
+                <x-section-heading title="Divisi & Tim Lomba APTRG" subtitle="Empat divisi internal laboratorium dan lima tim kompetisi Kontes Robot Terbang Indonesia." :centered="true" />
 
                 <!-- Baris 1: 4 Divisi Internal (Melebar Horisontal 4 Kolom) -->
                 <div class="mt-6 sm:mt-8 mb-8 sm:mb-10">
@@ -135,14 +118,14 @@
                 <!-- Baris 2: 5 Tim Lomba KRTI (Melebar Horisontal 5 Kolom) -->
                 <div>
                     <div class="flex items-center justify-between mb-3 border-b-2 border-primary pb-2">
-                        <h3 class="text-base sm:text-lg font-bold text-ink uppercase tracking-wider">5 Tim Lomba KRTI</h3>
+                        <h3 class="text-base sm:text-lg font-bold text-ink uppercase tracking-wider">5 Tim Lomba</h3>
                         <a href="{{ route('teams.index') }}" class="text-xs sm:text-sm font-bold text-primary hover:underline">Lihat Semua &rarr;</a>
                     </div>
                     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
                         @foreach ($teams as $team)
                             <x-card class="p-3.5 sm:p-4 flex flex-col items-center text-center justify-between hover:border-primary transition-colors h-full shadow-sm">
                                 <div class="flex flex-col items-center w-full min-w-0">
-                                    <img src="{{ asset($team->logo_path) }}" alt="{{ $team->team_name }}" class="w-12 h-12 sm:w-14 sm:h-14 rounded object-contain mb-2 flex-shrink-0">
+                                    <img src="{{ asset($team->logo_path) }}" alt="{{ $team->team_name }}" loading="lazy" decoding="async" class="w-12 h-12 sm:w-14 sm:h-14 rounded object-contain mb-2 flex-shrink-0">
                                     <x-badge color="red" class="mb-1.5">{{ $team->krti_code }}</x-badge>
                                     <h4 class="font-bold text-ink text-sm sm:text-base truncate w-full">{{ $team->team_name }}</h4>
                                     <p class="text-[10px] sm:text-[11px] text-primary font-semibold uppercase tracking-wider truncate w-full">{{ $team->krti_division }}</p>

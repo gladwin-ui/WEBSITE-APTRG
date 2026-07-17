@@ -116,7 +116,7 @@ class MemberSeeder extends Seeder
             'division_id' => $divMekanik?->id,
             'study_program' => 'S1 Teknik Elektro',
             'batch' => '2023',
-            'photo_path' => 'images/koor-mekanik.jpg',
+            'photo_path' => 'images/koor-mekanik.webp',
             'order' => 1,
         ]);
 
@@ -128,13 +128,13 @@ class MemberSeeder extends Seeder
             'division_id' => $divSistem?->id,
             'study_program' => 'S1 Teknik Telekomunikasi',
             'batch' => '2023',
-            'photo_path' => 'images/koor-sistem.jpg',
+            'photo_path' => 'images/koor-sistem.webp',
             'order' => 2,
         ]);
 
         Member::create([
             'name' => 'Azky Fadhel Ahmad',
-            'position' => 'Koordinator Divisi GCS',
+            'position' => 'Koordinator Divisi Ground Control Station',
             'level' => 4,
             'parent_id' => $wakilEksternal->id,
             'division_id' => $divGcs?->id,
@@ -152,7 +152,7 @@ class MemberSeeder extends Seeder
             'division_id' => $divNonTech?->id,
             'study_program' => 'S1 Sistem Informasi',
             'batch' => '2023',
-            'photo_path' => 'images/koor-nontech.jpg',
+            'photo_path' => 'images/koor-nontech.webp',
             'order' => 4,
         ]);
     }

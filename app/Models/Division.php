@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Division extends Model
 {
@@ -25,5 +26,10 @@ class Division extends Model
     public function members(): HasMany
     {
         return $this->hasMany(Member::class);
+    }
+
+    public function coordinator(): HasOne
+    {
+        return $this->hasOne(Member::class)->where('level', 4);
     }
 }

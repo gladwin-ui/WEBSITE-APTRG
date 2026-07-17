@@ -14,7 +14,7 @@ class AchievementSeeder extends Seeder
         $bangau  = CompetitionTeam::where('slug', 'bangau')->first();
         $raven   = CompetitionTeam::where('slug', 'raven')->first();
         $strix   = CompetitionTeam::where('slug', 'strix')->first();
-        $falcon  = CompetitionTeam::where('slug', 'falcon')->first();
+        $avalerion = CompetitionTeam::where('slug', 'avalerion')->first();
 
         $achievements = [
             [
@@ -64,7 +64,7 @@ class AchievementSeeder extends Seeder
                 'rank' => 'Best Design',
                 'category' => 'Divisi Technology Development (Airframe Innovation)',
                 'level' => 'Nasional',
-                'competition_team_id' => $falcon?->id,
+                'competition_team_id' => $avalerion?->id,
                 'description' => 'Penghargaan desain struktur komposit modular teringan dan paling kokoh.',
             ],
             [
@@ -104,7 +104,7 @@ class AchievementSeeder extends Seeder
                 'rank' => 'Best Design',
                 'category' => 'International UAV Competition',
                 'level' => 'Internasional',
-                'competition_team_id' => $falcon?->id,
+                'competition_team_id' => $avalerion?->id,
                 'description' => 'Partisipasi dan penghargaan inovasi avionik pada kompetisi UAV internasional TEKNOFEST.',
             ],
             [

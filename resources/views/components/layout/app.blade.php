@@ -10,8 +10,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $title ? $title . ' | APTRG Telkom University' : 'APTRG Telkom University — Fight Together, Win Together' }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @if ($isFullpage)
-        <link rel="preload" as="image" href="{{ asset('images/bg-hero-1.jpg') }}" fetchpriority="high">
+    @if ($isFullpage && request()->routeIs('home'))
+        <link rel="preload" as="video" href="/media/stream/buat-web-juga.mp4" type="video/mp4">
     @endif
     <style>
         [x-cloak] { display: none !important; }
@@ -23,7 +23,7 @@
     @if ($isFullpage)
         {{ $slot }}
     @else
-        <main class="flex-grow">
+        <main class="flex-grow pt-20">
             {{ $slot }}
         </main>
         <x-layout.footer />

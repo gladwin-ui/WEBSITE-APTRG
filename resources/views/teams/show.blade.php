@@ -3,7 +3,7 @@
     <section class="bg-surface border-b border-line py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <nav class="text-xs font-semibold uppercase tracking-wider text-body mb-3">
-                <a href="{{ route('teams.index') }}" class="hover:text-primary">Tim KRTI</a> &bull; <span>{{ $team->team_name }}</span>
+                <a href="{{ route('teams.index') }}" class="hover:text-primary">Tim Lomba</a> &bull; <span>{{ $team->team_name }}</span>
             </nav>
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div class="flex items-center space-x-4">
@@ -84,8 +84,9 @@
 
                     <!-- Placeholder UAV Image -->
                     <x-card class="p-4 text-center">
-                        <img src="{{ asset($team->image_path ?: 'images/placeholder-uav.svg') }}" 
-                             alt="{{ $team->team_name }} Aircraft" 
+                        <img src="{{ asset($team->image_path ?: 'images/placeholder-uav.svg') }}"
+                             alt="{{ $team->team_name }} Aircraft"
+                             loading="lazy" decoding="async"
                              class="w-full rounded">
                         <p class="text-xs font-semibold text-body mt-3">Ilustrasi Platform Wahana Terbang {{ $team->team_name }}</p>
                     </x-card>

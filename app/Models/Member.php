@@ -34,4 +34,12 @@ class Member extends Model
     {
         return $this->belongsTo(Division::class);
     }
+
+    public function getInitialsAttribute(): string
+    {
+        return collect(explode(' ', trim($this->name)))
+            ->filter()->take(2)
+            ->map(fn ($w) => mb_strtoupper(mb_substr($w, 0, 1)))
+            ->implode('');
+    }
 }

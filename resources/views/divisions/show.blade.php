@@ -1,130 +1,138 @@
 <x-layout.app :title="$division->name">
-    <!-- BREADCRUMB & HEADER DENGAN FOTO -->
-    <section class="bg-surface border-b border-line py-10 sm:py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <!-- Navigasi Back / Breadcrumb di Pinggir Kiri -->
-            <div class="flex justify-start mb-6">
-                <a href="{{ route('divisions.index') }}" class="inline-flex items-center gap-2.5 px-4 py-2 bg-canvas border border-line rounded-lg text-xs font-bold uppercase tracking-wider text-ink hover:text-primary hover:border-primary transition-all shadow-sm">
-                    <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-                    </svg>
-                    <span>Divisi &bull; {{ $division->name }}</span>
+
+{{-- ============ 1. HERO BANNER ============ --}}
+<section class="relative">
+    <div class="relative h-64 w-full overflow-hidden md:h-80">
+        {{-- Foto banner divisi (fallback placeholder bila kosong) --}}
+        <img src="{{ $division->image_path ? asset($division->image_path) : asset('images/bg-hero-1.webp') }}"
+             alt="Dokumentasi {{ $division->name }}"
+             fetchpriority="high"
+             class="h-full w-full object-cover object-[50%_40%]">
+        {{-- Overlay SOLID (bukan gradient) --}}
+        <div class="absolute inset-0" style="background-color: rgba(15,20,30,0.6);"></div>
+
+        {{-- Konten hero rata kiri --}}
+        <div class="absolute inset-0 flex items-center">
+            <div class="mx-auto w-full max-w-6xl px-6">
+                <a href="{{ route('divisions.index') }}"
+                   class="mb-3 inline-flex items-center gap-1.5 text-xs font-medium tracking-wide text-white/80 hover:text-white">
+                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"/></svg>
+                    Kembali ke Divisi
                 </a>
-            </div>
-
-            <!-- Judul Divisi Rata Tengah -->
-            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-ink uppercase tracking-tight text-center">
-                {{ $division->name }}
-            </h1>
-
-            <!-- 1. KOORDINATOR DIVISI DI ATAS SEBELUM FOTO DIVISI -->
-            <div class="mt-10 max-w-4xl mx-auto">
-                <x-card class="p-8 sm:p-10 text-center shadow-md">
-                    <h3 class="text-xs font-bold uppercase tracking-wider text-primary pb-3 border-b border-line mb-8">
-                        Koordinator Divisi
-                    </h3>
-                    @forelse ($members as $member)
-                        <div class="flex flex-col items-center justify-center gap-6">
-                            <img src="{{ asset($member->photo_path ?: 'images/avatar-placeholder.svg') }}" 
-                                 alt="{{ $member->name }}" 
-                                 class="w-48 h-48 sm:w-56 sm:h-56 rounded-full object-cover object-top border-4 border-primary shadow-md mx-auto">
-                            <div class="space-y-2">
-                                <h4 class="text-2xl sm:text-3xl font-extrabold text-ink">{{ $member->name }}</h4>
-                                <p class="text-base font-bold text-primary uppercase tracking-wide">{{ $member->position }}</p>
-                                <p class="text-sm sm:text-base text-body pt-1">
-                                    {{ $member->study_program }} &bull; Angkatan {{ $member->batch }}
-                                </p>
-                            </div>
-                        </div>
-                    @empty
-                        <p class="text-sm text-body text-center py-4">Belum ada data koordinator.</p>
-                    @endforelse
-                </x-card>
-            </div>
-
-            <!-- Foto Header Divisi -->
-            @php
-                $headerImage = match($division->slug) {
-                    'mekanik' => asset('images/foto-mekanik.jpg'),
-                    'sistem' => asset('images/foto-sistem.jpg'),
-                    'non-technical' => asset('images/foto-nontech.jpg'),
-                    default => asset('images/bg-hero-1.jpg'),
-                };
-            @endphp
-            <div class="mt-10 overflow-hidden rounded-xl border border-line shadow-sm bg-canvas">
-                <img src="{{ $headerImage }}" 
-                     alt="Foto Header {{ $division->name }}" 
-                     class="w-full h-96 sm:h-[32rem] object-cover object-[50%_65%]">
-            </div>
-        </div>
-    </section>
-
-    <!-- DETAIL CONTENT (VERTIKAL DARI ATAS KE BAWAH) -->
-    <section class="py-16 bg-canvas border-b border-line">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
-
-            <!-- 2. DESKRIPSI DIVISI -->
-            <x-card class="p-8">
-                <x-section-heading title="Deskripsi Divisi" />
-                <p class="text-body leading-relaxed text-base sm:text-lg">
-                    {{ $division->description }}
-                </p>
-            </x-card>
-
-            <!-- 3. JOBDESK / TANGGUNG JAWAB UTAMA -->
-            <x-card class="p-8">
-                <x-section-heading title="Daftar Tanggung Jawab Utama" />
-                <ul class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-                    @foreach ($division->responsibilities as $resp)
-                        <li class="flex items-start space-x-3 bg-canvas border border-line p-4 rounded-lg">
-                            <span class="flex-shrink-0 w-6 h-6 rounded bg-primary text-white font-bold text-xs flex items-center justify-center mt-0.5">
-                                &checkmark;
-                            </span>
-                            <span class="text-body font-medium leading-relaxed">{{ $resp }}</span>
-                        </li>
-                    @endforeach
-                </ul>
-            </x-card>
-
-            <!-- 4. FOTO KEGIATAN DIVISI -->
-            <x-card class="p-8">
-                <x-section-heading title="Dokumentasi & Kegiatan Divisi" subtitle="Potret aktivitas riset, perancangan, dan eksperimen yang dilakukan oleh {{ $division->name }}." />
-                
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-6">
-                    <div class="group relative overflow-hidden rounded-lg border border-line bg-canvas">
-                        <img src="{{ asset('images/bg-hero-1.jpg') }}" alt="Kegiatan {{ $division->name }} 1" class="w-full h-80 sm:h-96 object-cover object-top transition-transform duration-300 group-hover:scale-105">
-                        <div class="absolute inset-x-0 bottom-0 bg-ink/80 p-4 text-white text-sm font-semibold">
-                            Aktivitas Riset &amp; Pengembangan Divisi
-                        </div>
-                    </div>
-                    <div class="group relative overflow-hidden rounded-lg border border-line bg-canvas">
-                        <img src="{{ asset('images/bg-hero-2.jpg') }}" alt="Kegiatan {{ $division->name }} 2" class="w-full h-80 sm:h-96 object-cover object-top transition-transform duration-300 group-hover:scale-105">
-                        <div class="absolute inset-x-0 bottom-0 bg-ink/80 p-4 text-white text-sm font-semibold">
-                            Pengujian &amp; Perakitan Wahana
-                        </div>
-                    </div>
-                    <div class="group relative overflow-hidden rounded-lg border border-line bg-canvas">
-                        <img src="{{ asset('images/bg-hero-1.jpg') }}" alt="Kegiatan {{ $division->name }} 3" class="w-full h-80 sm:h-96 object-cover object-top transition-transform duration-300 group-hover:scale-105">
-                        <div class="absolute inset-x-0 bottom-0 bg-ink/80 p-4 text-white text-sm font-semibold">
-                            Diskusi Teknis &amp; Koordinasi Tim
-                        </div>
-                    </div>
-                    <div class="group relative overflow-hidden rounded-lg border border-line bg-canvas">
-                        <img src="{{ asset('images/bg-hero-2.jpg') }}" alt="Kegiatan {{ $division->name }} 4" class="w-full h-80 sm:h-96 object-cover object-top transition-transform duration-300 group-hover:scale-105">
-                        <div class="absolute inset-x-0 bottom-0 bg-ink/80 p-4 text-white text-sm font-semibold">
-                            Kolaborasi Lintas Divisi APTRG
-                        </div>
-                    </div>
+                <div class="mb-3">
+                    <span class="inline-block rounded-full bg-primary px-3 py-1 text-xs font-semibold text-white">
+                        {{ str_pad($division->order, 2, '0', STR_PAD_LEFT) }} · Divisi Internal
+                    </span>
                 </div>
-            </x-card>
+                <h1 class="text-3xl font-bold text-white md:text-4xl">{{ $division->name }}</h1>
+                <p class="mt-2 max-w-xl text-sm text-white/85 md:text-base">{{ $division->short_description }}</p>
+            </div>
+        </div>
+    </div>
+</section>
 
-            <!-- 5. TOMBOL KEMBALI -->
-            <div class="text-center pt-2">
-                <a href="{{ route('divisions.index') }}" class="inline-flex items-center justify-center px-8 py-4 bg-surface border border-line text-xs font-bold uppercase tracking-wider text-primary rounded-lg shadow-sm hover:border-primary transition-colors">
-                    &larr; Kembali ke Daftar Divisi
-                </a>
+{{-- ============ 2. SPOTLIGHT KOORDINATOR (menimpa hero) ============ --}}
+@if ($coordinator)
+<section class="mx-auto max-w-6xl px-6">
+    {{-- -mt menarik kartu naik menimpa hero; z-10 agar di atas --}}
+    <div class="relative z-10 -mt-16 rounded-2xl border border-line bg-surface p-6 shadow-md md:-mt-20 md:p-8">
+        <div class="flex flex-col items-center gap-6 text-center md:flex-row md:items-center md:text-left">
+            {{-- FOTO BESAR (bintang halaman) --}}
+            <div class="shrink-0">
+                <img src="{{ $coordinator->photo_path ? asset($coordinator->photo_path) : asset('images/avatar-placeholder.svg') }}"
+                     alt="{{ $coordinator->name }}"
+                     class="h-32 w-32 rounded-full border-4 border-primary object-cover object-top md:h-40 md:w-40 shadow-md">
+            </div>
+            {{-- IDENTITAS --}}
+            <div class="min-w-0">
+                <span class="text-xs font-bold uppercase tracking-widest text-primary">Koordinator Divisi</span>
+                <h2 class="mt-1 text-2xl font-bold text-ink md:text-3xl">{{ $coordinator->name }}</h2>
+                <p class="mt-1 font-semibold text-primary">{{ $coordinator->position }}</p>
+                <p class="mt-1 text-sm text-body">{{ $coordinator->study_program }} · Angkatan {{ $coordinator->batch }}</p>
+            </div>
+        </div>
+    </div>
+</section>
+@endif
+
+{{-- ============ 3. BODY DUA KOLOM ============ --}}
+<section class="mx-auto max-w-6xl px-6 py-12">
+    <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
+
+        {{-- KIRI: konten utama (2/3) --}}
+        <div class="space-y-10 lg:col-span-2">
+
+            {{-- Tentang --}}
+            <div>
+                <x-section-heading title="Tentang Divisi" />
+                <p class="mt-4 leading-relaxed text-body text-base sm:text-lg">{{ $division->description }}</p>
+            </div>
+
+            {{-- Tanggung jawab: list beraksen garis merah --}}
+            <div>
+                <x-section-heading title="Tanggung Jawab" />
+                <div class="mt-4 space-y-2.5">
+                    @foreach ($responsibilities as $item)
+                        <div class="border-l-4 border-primary bg-canvas px-4 py-3 text-sm font-medium text-ink shadow-sm">
+                            {{ $item }}
+                        </div>
+                    @endforeach
+                </div>
             </div>
 
         </div>
-    </section>
+
+        {{-- KANAN: sidebar sticky (1/3) --}}
+        <aside class="lg:col-span-1">
+            <div class="lg:sticky lg:top-24 space-y-4">
+                <div class="rounded-xl border border-line bg-surface p-5 shadow-sm">
+                    <h3 class="mb-4 text-sm font-bold uppercase tracking-wide text-primary">Sekilas Divisi</h3>
+                    <dl class="space-y-3 text-sm">
+                        <div class="flex items-center justify-between border-b border-line pb-3">
+                            <dt class="text-body">Jumlah tanggung jawab</dt>
+                            <dd class="font-semibold text-ink">{{ count($responsibilities) }}</dd>
+                        </div>
+                        <div class="flex items-center justify-between border-b border-line pb-3">
+                            <dt class="text-body">Koordinator</dt>
+                            <dd class="font-semibold text-ink text-right">{{ $coordinator?->name ?? '—' }}</dd>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <dt class="text-body">Bagian dari</dt>
+                            <dd class="font-semibold text-ink">APTRG</dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+        </aside>
+
+    </div>
+</section>
+
+{{-- ============ 4. GALERI VARIATIF ============ --}}
+<section class="mx-auto max-w-6xl px-6 pb-16">
+    <x-section-heading title="Dokumentasi & Kegiatan" />
+    <p class="mt-3 text-body">Potret aktivitas riset, perancangan, dan eksperimen {{ $division->name }}.</p>
+
+    <div class="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
+        {{-- Foto utama besar (2 kolom) --}}
+        <div class="group relative overflow-hidden rounded-xl md:col-span-2 border border-line bg-canvas">
+            <img src="{{ $division->image_path ? asset($division->image_path) : asset('images/bg-hero-1.webp') }}" alt="Dokumentasi utama {{ $division->name }}"
+                 loading="lazy" decoding="async"
+                 class="h-72 w-full object-cover transition group-hover:scale-105">
+            <div class="absolute inset-x-0 bottom-0 p-4" style="background-color: rgba(15,20,30,0.55);">
+                <span class="text-sm font-semibold text-white">Aktivitas Riset & Pengembangan</span>
+            </div>
+        </div>
+        {{-- Dua thumbnail bertumpuk --}}
+        <div class="grid grid-rows-2 gap-4">
+            <div class="overflow-hidden rounded-xl border border-line bg-canvas">
+                <img src="{{ asset('images/bg-hero-1.webp') }}" alt="Kegiatan {{ $division->name }} 1" loading="lazy" decoding="async" class="h-full w-full object-cover">
+            </div>
+            <div class="overflow-hidden rounded-xl border border-line bg-canvas">
+                <img src="{{ asset('images/bg-hero-2.webp') }}" alt="Kegiatan {{ $division->name }} 2" loading="lazy" decoding="async" class="h-full w-full object-cover">
+            </div>
+        </div>
+    </div>
+</section>
+
 </x-layout.app>
