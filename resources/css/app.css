@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -25,3 +27,61 @@
     from { opacity: 0; transform: translateY(20px); }
     to   { opacity: 1; transform: translateY(0); }
 }
+
+/* ============ REVEAL ON SCROLL ============ */
+.reveal {
+    opacity: 0;
+    transition: opacity .7s ease, transform .7s ease;
+    will-change: opacity, transform;
+}
+.reveal-up    { transform: translateY(32px); }
+.reveal-down  { transform: translateY(-32px); }
+.reveal-left  { transform: translateX(-44px); }
+.reveal-right { transform: translateX(44px); }
+.reveal-zoom  { transform: scale(.92); }
+.reveal.is-visible { opacity: 1; transform: none; }
+
+/* Stagger (jeda antar elemen dalam satu section) */
+.reveal.d-1 { transition-delay: .10s; }
+.reveal.d-2 { transition-delay: .20s; }
+.reveal.d-3 { transition-delay: .30s; }
+.reveal.d-4 { transition-delay: .40s; }
+
+/* Transisi warna latar beranda */
+#home-root { transition: background-color .7s ease; }
+
+/* ---- FALLBACK: jika JS mati / reduced-motion, konten tetap tampil ---- */
+.no-js .reveal { opacity: 1 !important; transform: none !important; }
+@media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+}
+
+/* ============ TIM LOMBA: TIMED CARDS (desktop-only) ============ */
+.tc-scene { display: none; position: fixed; inset: 0; isolation: isolate; z-index: 10;
+    background:#1a1a1a; color:#FFFFFFDD; font-family:"Inter",sans-serif; overflow:hidden; }
+.tc-scene .tc-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.5); z-index: 21; pointer-events: none; }
+.tc-mobile { display: block; }
+@media (min-width: 768px) { .tc-scene { display: block; } .tc-mobile { display: none; } }
+
+.tc-scene .card { position:absolute; left:0; top:0; background-position:center; background-size:cover;
+    box-shadow:6px 6px 10px 2px rgba(0,0,0,.6); cursor:pointer; }
+.tc-scene .card-content { position:absolute; left:0; top:0; color:#FFFFFFDD; padding-left:16px; pointer-events:none; }
+.tc-scene .content-place { margin-top:6px; font-size:13px; font-weight:500; }
+.tc-scene .content-title-1,.tc-scene .content-title-2 { font-weight:600; font-size:20px; font-family:"Oswald",sans-serif; }
+.tc-scene .content-start { width:30px; height:5px; border-radius:99px; background:#FFFFFFDD; }
+
+.tc-scene .details { z-index:22; position:absolute; top:240px; left:60px; }
+.tc-scene .details .place-box { height:46px; overflow:hidden; }
+.tc-scene .details .place-box .text { padding-top:16px; font-size:20px; position:relative; }
+.tc-scene .details .place-box .text:before { content:""; position:absolute; top:0; left:0; width:30px; height:4px; border-radius:99px; background:#fff; }
+.tc-scene .details .title-1,.tc-scene .details .title-2 { font-weight:600; font-size:72px; font-family:"Oswald",sans-serif; line-height:1; }
+.tc-scene .details .title-box-1,.tc-scene .details .title-box-2 { margin-top:2px; height:100px; overflow:hidden; }
+.tc-scene .details .desc { margin-top:16px; width:500px; max-width:60vw; }
+.tc-scene .details .cta { width:500px; margin-top:24px; display:flex; align-items:center; }
+.tc-scene .details .cta .discover { border:1px solid #fff; background:transparent; height:36px; border-radius:99px; color:#fff; padding:4px 24px; font-size:12px; margin-left:0; text-transform:uppercase; cursor:pointer; }
+
+.tc-scene .pagination { position:absolute; left:0; top:0; display:inline-flex; }
+.tc-scene .pagination .arrow { z-index:60; width:50px; height:50px; border-radius:999px; border:2px solid #ffffff55; display:grid; place-items:center; cursor:pointer; }
+.tc-scene .pagination .arrow:nth-child(2){ margin-left:20px; }
+.tc-scene .pagination .arrow svg { width:24px; height:24px; stroke-width:2; color:#ffffff99; }
+.tc-scene .cover { position:absolute; left:0; top:0; width:100vw; height:100vh; background:#fff; z-index:100; }

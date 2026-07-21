@@ -123,9 +123,9 @@ Instagram Resmi: **@aptrg**
 |---|---|---|---|
 | `/` | `home` | `HomeController@index` | Hero, statistik lab, ringkasan profil, preview 4 divisi, preview 5 tim KRTI, 3 prestasi terbaru, CTA Instagram |
 | `/profil` | `profile` | `ProfileController@index` | Sejarah lab, visi, misi, fokus riset multidisiplin, lokasi & kontak |
-| `/divisi` | `divisions.index` | `DivisionController@index` | Grid 4 kartu divisi internal lab beserta ringkasan tanggung jawab |
+| `/divisi` | `divisions.index` | `DivisionController@index` | Galeri sinematik "Timed Cards" (GSAP, klik-saja) 4 divisi internal; mobile memakai daftar kartu sederhana |
 | `/divisi/{slug}` | `divisions.show` | `DivisionController@show` | Detail divisi lengkap, daftar tanggung jawab, dan profil koordinator divisi |
-| `/tim-krti` | `teams.index` | `CompetitionTeamController@index` | Grid 5 kartu tim KRTI (Frigate, Bangau, Raven, Strix, Falcon) |
+| `/tim-krti` | `teams.index` | `CompetitionTeamController@index` | Accordion horizontal interaktif (Alpine) 5 tim lomba; mobile memakai accordion vertikal |
 | `/tim-krti/{slug}` | `teams.show` | `CompetitionTeamController@show` | Detail tim KRTI, deskripsi, tema misi, tabel spesifikasi teknis, dan prestasi tim |
 | `/prestasi` | `achievements.index` | `AchievementController@index` | Daftar prestasi 2019–2025 dengan filter interaktif client-side Alpine.js tanpa reload |
 | `/struktur` | `structure` | `StructureController@index` | Bagan struktur kepengurusan hierarkis (pohon CSS desktop, list indent mobile) |
@@ -147,6 +147,8 @@ Instagram Resmi: **@aptrg**
 | **Halaman Divisi → accordion full-height interaktif (Alpine)** | ✅ Selesai | Desktop: 4 panel accordion horizontal ~78vh, hover/klik memperlebar panel aktif (animasi 500ms) berisi ikon + nomor + judul + deskripsi + 3 tanggung jawab + koordinator + tombol Detail; panel nonaktif jadi strip (nomor + ikon + nama vertikal). **Mobile fallback**: berubah jadi accordion vertikal yang membuka ke bawah |
 | **Redesign halaman detail Divisi** | ✅ Selesai | Hero menyatu + overlay solid, spotlight koordinator menimpa hero, body 2 kolom (konten + sidebar sticky), tanggung jawab list garis merah, galeri variatif |
 | **Lazy loading gambar** | ✅ Selesai | Native `loading="lazy"` + `decoding="async"` pada foto below-the-fold (galeri, org chart, kartu tim); hero divisi tetap eager + `fetchpriority="high"` |
+| **Divisi → animasi Timed Cards (GSAP, klik-saja) + fallback mobile** | ✅ Selesai | Desktop `/divisi`: background fullscreen divisi aktif (foto asli divisi), antrian kartu kanan-bawah bisa diklik, panel detail kiri-bawah, panah navigasi; TANPA auto-play. Mobile (<768px): daftar kartu sederhana. Kolom `video_path` (nullable) di `competition_teams` disiapkan untuk tahap video |
+| **Tim Lomba → accordion full-height interaktif (Alpine)** | ✅ Selesai | Desktop `/tim-krti`: 5 panel accordion horizontal ~72vh (logo strip vertikal, panel aktif berisi logo + nomor + nama + divisi KRTI + tagline + deskripsi + 3 spesifikasi + tombol detail). Mobile: accordion vertikal |
 
 ---
 
@@ -160,6 +162,14 @@ Instagram Resmi: **@aptrg**
 ---
 
 ## 📝 Changelog
+
+### v1.2.1 (21 Juli 2026)
+- **Tukar animasi halaman Divisi ↔ Tim Lomba**: `/divisi` kini memakai galeri sinematik **Timed Cards** (GSAP, klik-saja, foto asli divisi sebagai background fullscreen, data via `window.TC_ITEMS`), sedangkan `/tim-krti` memakai **accordion horizontal interaktif** (Alpine) yang sebelumnya milik halaman Divisi. Komponen baru `x-team-panel-body` (logo + nomor + divisi KRTI + tagline + 3 spesifikasi + tombol detail); `initTimedCards()` dibuat generik (`window.TC_ITEMS || window.TEAMS`).
+
+### v1.2.0 (21 Juli 2026)
+- **Halaman `/tim-krti` dirombak jadi galeri sinematik "Timed Cards"** (adaptasi pen Juxtopposed, GSAP core tanpa ScrollTrigger): background fullscreen = media tim aktif, antrian kartu kanan-bawah **bisa diklik** untuk dijadikan aktif (tanpa auto-play), panel kiri-bawah berisi nama/divisi/deskripsi + tombol "Lihat Misi & Spesifikasi", panah navigasi manual + progress bar + nomor slide. Scene di-scope `.tc-scene` (`position:fixed` + `isolation:isolate`) agar navbar tetap di atas; **mobile (<768px) memakai layout daftar kartu terpisah** (`.tc-mobile`).
+- Kolom baru `competition_teams.video_path` (nullable, migration terpisah) untuk tahap video background berikutnya; data JS dikirim via `@json($teamsData)` dari `CompetitionTeamController@index` dengan fallback media ke foto lab yang sudah ada (digilir per tim, placeholder generik diabaikan).
+- Dependensi baru: `gsap`; font `Oswald` (Google Fonts) untuk judul besar.
 
 ### v1.1.0 (17 Juli 2026)
 - Redesign kartu halaman `/divisi` menjadi **split card**: panel merah flat solid `#C1121F` di kiri (ikon khas divisi + nomor urut 2 digit), konten di kanan (judul, deskripsi singkat, chip tanggung jawab maks 3 + "+N lainnya", link "Lihat detail" dengan panah bergeser saat hover).

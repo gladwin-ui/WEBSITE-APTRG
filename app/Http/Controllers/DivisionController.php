@@ -12,7 +12,41 @@ class DivisionController extends Controller
     {
         $divisions = Division::with('coordinator')->orderBy('order')->get();
 
-        return view('divisions.index', compact('divisions'));
+        // Data untuk galeri Timed Cards (desktop)
+        $divisionsData = $divisions->values()->map(function (Division $d) {
+            $clean = trim(str_ireplace('Divisi ', '', $d->name));
+            $words = explode(' ', $clean);
+
+            // Nama panjang (≥3 kata) dipecah dua baris; selain itu baris 2 = "DIVISION"
+            if (count($words) >= 3) {
+                $title  = strtoupper(implode(' ', array_slice($words, 0, -1)));
+                $title2 = strtoupper(end($words));
+            } else {
+                $title  = strtoupper($clean);
+                if ($title === 'MEKANIK') {
+                    $title = 'MECHANIC';
+                } elseif ($title === 'SISTEM') {
+                    $title = 'SYSTEM';
+                }
+                $title2 = 'DIVISION';
+            }
+
+            $image = ($d->image_path && file_exists(public_path($d->image_path)))
+                ? $d->image_path
+                : 'images/bg-hero-1.webp';
+
+            return [
+                'place'       => 'APTRG',
+                'title'       => $title,
+                'title2'      => $title2,
+                'description' => $d->short_description,
+                'image'       => asset($image),
+                'video'       => null,
+                'href'        => route('divisions.show', $d->slug),
+            ];
+        })->values();
+
+        return view('divisions.index', compact('divisions', 'divisionsData'));
     }
 
     public function show(string $slug): View

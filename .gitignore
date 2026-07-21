@@ -29,4 +29,5 @@ cloudflared.exe
 *.exe
 /ASSET
 /ASSET LOGO
+*PROMPT*.md
 PROMPT*.md

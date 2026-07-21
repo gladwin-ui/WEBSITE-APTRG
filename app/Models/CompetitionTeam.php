@@ -19,6 +19,7 @@ class CompetitionTeam extends Model
         'specs',
         'logo_path',
         'image_path',
+        'video_path',
         'order',
     ];
 

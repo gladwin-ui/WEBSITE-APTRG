@@ -1,82 +1,53 @@
 <x-layout.app title="Divisi Laboratorium">
-<section class="mx-auto max-w-6xl px-6 py-12">
 
-    {{-- Heading + intro ringkas --}}
-    <div class="mb-8 max-w-2xl">
-        <x-section-heading title="Divisi Laboratorium" />
-        <p class="mt-3 text-body">Empat divisi yang menggerakkan riset dan kompetisi APTRG — dari perancangan wahana hingga pengelolaan organisasi. Arahkan atau klik untuk menjelajahi tiap divisi.</p>
+{{-- ====== DESKTOP: TIMED CARDS (GSAP, klik-saja) ====== --}}
+<div class="tc-scene">
+    <div id="demo"></div>
+    <div class="tc-overlay"></div>
+
+    {{-- dua panel detail (bergantian even/odd saat transisi) --}}
+    @foreach (['even', 'odd'] as $p)
+    <div class="details" id="details-{{ $p }}">
+        <div class="place-box"><div class="text">&mdash;</div></div>
+        <div class="title-box-1"><div class="title-1">&mdash;</div></div>
+        <div class="title-box-2"><div class="title-2">&mdash;</div></div>
+        <div class="desc">&mdash;</div>
+        <div class="cta">
+            <button class="discover">Lihat Detail Divisi</button>
+        </div>
+    </div>
+    @endforeach
+
+    <div class="pagination" id="pagination">
+        <div class="arrow arrow-left" aria-label="Sebelumnya">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>
+        </div>
+        <div class="arrow arrow-right" aria-label="Berikutnya">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
+        </div>
     </div>
 
-    {{-- ============ DESKTOP: ACCORDION HORIZONTAL (md ke atas) ============ --}}
-    <div x-data="{ active: -1 }" x-cloak
-         @mouseleave="active = -1"
-         class="hidden gap-3 md:flex"
-         style="height: 72vh; min-height: 540px;">
+    <div class="cover"></div>
+</div>
 
-        @foreach ($divisions as $division)
-            @php $i = $loop->index; @endphp
-            <div
-                @mouseenter="active = {{ $i }}"
-                @click="active = {{ $i }}"
-                :style="{ flexGrow: active === {{ $i }} ? 6 : (active === -1 ? 1 : 0) }"
-                style="flex-basis: 80px;"
-                class="relative cursor-pointer overflow-hidden rounded-xl border border-line transition-[flex-grow] duration-500 ease-in-out"
-                :class="active === {{ $i }} ? 'bg-primary' : 'bg-surface hover:border-primary'">
-
-                {{-- Konten aktif --}}
-                <div x-show="active === {{ $i }}" x-transition:enter.delay.150ms class="h-full">
-                    <x-division-panel-body :division="$division" />
+{{-- ====== MOBILE: LAYOUT SEDERHANA ====== --}}
+<div class="tc-mobile bg-[#1a1a1a] px-6 py-10">
+    <h1 class="mb-6 text-2xl font-bold text-white">Divisi Laboratorium</h1>
+    <div class="space-y-4">
+        @foreach ($divisions as $d)
+            <a href="{{ route('divisions.show', $d->slug) }}" class="relative block h-56 overflow-hidden rounded-xl">
+                <img src="{{ $divisionsData[$loop->index]['image'] }}" alt="{{ $d->name }}" loading="lazy" decoding="async" class="absolute inset-0 h-full w-full object-cover">
+                <div class="absolute inset-0" style="background-color: rgba(15,20,30,0.55);"></div>
+                <div class="relative flex h-full flex-col justify-end p-4 text-white">
+                    <span class="text-xl font-bold">{{ $d->name }}</span>
+                    <span class="mt-1 text-xs text-white/80 line-clamp-2">{{ $d->short_description }}</span>
                 </div>
-
-                {{-- Strip nonaktif --}}
-                <div x-show="active !== {{ $i }}" class="grid grid-rows-3 h-full w-full items-center justify-items-center py-6">
-                    <x-division-icon :name="$division->icon" class="h-6 w-6 text-primary self-start" />
-                    <div></div>
-                    <span class="whitespace-nowrap text-sm tracking-wider text-body self-end"
-                          style="writing-mode: vertical-rl; transform: rotate(180deg);">{{ $division->name }}</span>
-                </div>
-            </div>
+            </a>
         @endforeach
     </div>
+</div>
 
-    {{-- ============ MOBILE: ACCORDION VERTIKAL (di bawah md) ============ --}}
-    <div x-data="{
-            active: -1,
-            toggle(i) {
-                this.active = this.active === i ? -1 : i;
-            }
-         }"
-         x-cloak class="flex flex-col gap-3 md:hidden">
-        @foreach ($divisions as $division)
-            @php $i = $loop->index; @endphp
-            <div class="overflow-hidden rounded-xl border border-line transition-colors duration-300"
-                 :class="active === {{ $i }} ? 'bg-primary' : 'bg-surface'">
+{{-- data untuk JS --}}
+<script>window.TC_ITEMS = @json($divisionsData);</script>
 
-                <button type="button" @click="toggle({{ $i }})"
-                    class="flex w-full items-center gap-3 p-4 text-left">
-                    <x-division-icon :name="$division->icon" class="h-6 w-6"
-                        ::class="active === {{ $i }} ? 'text-white' : 'text-primary'" />
-                    <span class="flex-1 font-semibold"
-                          :class="active === {{ $i }} ? 'text-white' : 'text-ink'">{{ $division->name }}</span>
-                    <span class="text-sm font-bold"
-                          :class="active === {{ $i }} ? 'text-white/70' : 'text-body/40'">{{ str_pad($division->order, 2, '0', STR_PAD_LEFT) }}</span>
-                    <svg class="h-5 w-5 transition-transform duration-300" :class="active === {{ $i }} ? 'rotate-180 text-white' : 'text-body'"
-                         fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/></svg>
-                </button>
-
-                {{-- Panel body dengan max-height transition untuk animasi smooth --}}
-                <div x-ref="panel{{ $i }}"
-                     class="overflow-hidden transition-[max-height,opacity] duration-500 ease-in-out"
-                     :style="active === {{ $i }}
-                         ? 'max-height: ' + ($refs.panel{{ $i }}.scrollHeight) + 'px; opacity: 1;'
-                         : 'max-height: 0px; opacity: 0;'">
-                    <div class="px-4 pb-5">
-                        <x-division-panel-body :division="$division" />
-                    </div>
-                </div>
-            </div>
-        @endforeach
-    </div>
-
-</section>
 </x-layout.app>
