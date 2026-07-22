@@ -33,3 +33,4 @@
     @stack('scripts')
 </body>
 </html>
+
