@@ -74,6 +74,7 @@ function initTimedCards() {
 
     const getCard = (i) => `#card${i}`, getCardContent = (i) => `#card-content-${i}`, getSliderItem = (i) => `#slide-item-${i}`;
     let order = range(data.length);
+    let activeIdx = 0;
     let detailsEven = true, offsetTop = 200, offsetLeft = 700, clicks = 0;
     const cardWidth = 200, cardHeight = 300, gap = 40, numberSize = 50, ease = 'sine.inOut';
 
@@ -84,6 +85,25 @@ function initTimedCards() {
         document.querySelector(`${a} .title-2`).textContent = data[di].title2;
         document.querySelector(`${a} .desc`).textContent = data[di].description;
         document.querySelector(`${a} .discover`).onclick = () => { window.location.href = data[di].href; };
+    }
+
+    function updateArrows() {
+        const leftArrow = document.querySelector('.arrow-left');
+        const rightArrow = document.querySelector('.arrow-right');
+        if (leftArrow) {
+            if (activeIdx === 0) {
+                leftArrow.classList.add('opacity-30', 'pointer-events-none');
+            } else {
+                leftArrow.classList.remove('opacity-30', 'pointer-events-none');
+            }
+        }
+        if (rightArrow) {
+            if (activeIdx === data.length - 1) {
+                rightArrow.classList.add('opacity-30', 'pointer-events-none');
+            } else {
+                rightArrow.classList.remove('opacity-30', 'pointer-events-none');
+            }
+        }
     }
 
     function init() {
@@ -109,6 +129,7 @@ function initTimedCards() {
         });
 
         fillDetails(active);
+        updateArrows();
         const d = 0.6;
         gsap.to('.cover', { x: width + 400, delay: 0.5, ease });
         rest.forEach((i, index) => {
@@ -125,6 +146,7 @@ function initTimedCards() {
         const dA = detailsEven ? '#details-even' : '#details-odd';
         const dI = detailsEven ? '#details-odd' : '#details-even';
         fillDetails(order[0]);
+        updateArrows();
 
         set(dA, { zIndex: 22 });
         gsap.to(dA, { opacity: 1, delay: 0.4, ease });
@@ -171,25 +193,106 @@ function initTimedCards() {
         });
     }
 
-    function advance(steps) {                 // maju N langkah (klik-saja)
-        if (steps <= 0) return;
-        const wasIdle = clicks === 0;
-        clicks += steps;
-        if (wasIdle) step();
+    function stepBackward() {
+        order.unshift(order.pop());
+        detailsEven = !detailsEven;
+        const dA = detailsEven ? '#details-even' : '#details-odd';
+        const dI = detailsEven ? '#details-odd' : '#details-even';
+        fillDetails(order[0]);
+        updateArrows();
+
+        set(dA, { zIndex: 22 });
+        gsap.to(dA, { opacity: 1, delay: 0.4, ease });
+        gsap.to(`${dA} .text`, { y: 0, delay: 0.1, duration: 0.7, ease });
+        gsap.to(`${dA} .title-1`, { y: 0, delay: 0.15, duration: 0.7, ease });
+        gsap.to(`${dA} .title-2`, { y: 0, delay: 0.15, duration: 0.7, ease });
+        gsap.to(`${dA} .desc`, { y: 0, delay: 0.3, duration: 0.4, ease });
+        gsap.to(`${dA} .cta`, { y: 0, delay: 0.35, duration: 0.4, ease });
+        set(dI, { zIndex: 12 });
+
+        const [active, ...rest] = order;
+        const prv = rest[0];
+        set(getCard(prv), { zIndex: 20 });
+        set(getCard(active), { zIndex: 10 });
+        gsap.to(getCardContent(active), { y: offsetTop + cardHeight - 10, opacity: 0, duration: 0.3, ease });
+        gsap.to(getSliderItem(active), { x: 0, ease });
+
+        gsap.to(getCard(active), {
+            x: 0, y: 0, ease, width: window.innerWidth, height: window.innerHeight, borderRadius: 0, zIndex: 20,
+            onComplete: () => {
+                set(dI, { opacity: 0 });
+                ['.text', '.title-1', '.title-2'].forEach((s) => set(`${dI} ${s}`, { y: 100 }));
+                set(`${dI} .desc`, { y: 50 }); set(`${dI} .cta`, { y: 60 });
+                clicks -= 1;
+                if (clicks > 0) stepBackward();
+            },
+        });
+
+        gsap.to(getCard(prv), {
+            x: offsetLeft, y: offsetTop, width: cardWidth, height: cardHeight, zIndex: 30, borderRadius: 10, ease
+        });
+        gsap.to(getCardContent(prv), {
+            x: offsetLeft, y: offsetTop + cardHeight - 100, opacity: 1, zIndex: 40, ease
+        });
+        gsap.to(getSliderItem(prv), { x: numberSize, ease });
+        gsap.to('.progress-sub-foreground', { width: 500 * (1 / order.length) * (active + 1), ease });
+
+        rest.forEach((i, index) => {
+            if (i !== prv) {
+                const xNew = offsetLeft + index * (cardWidth + gap);
+                set(getCard(i), { zIndex: 30 });
+                gsap.to(getCard(i), { x: xNew, y: offsetTop, width: cardWidth, height: cardHeight, ease, delay: 0.1 * (index + 1) });
+                gsap.to(getCardContent(i), { x: xNew, y: offsetTop + cardHeight - 100, opacity: 1, zIndex: 40, ease, delay: 0.1 * (index + 1) });
+                gsap.to(getSliderItem(i), { x: (index + 1) * numberSize, ease });
+            }
+        });
     }
 
-    // Klik kartu antrian → maju ke tim itu; klik kartu aktif → buka detail
+    function advanceForward(steps) {
+        if (clicks > 0) return;
+        if (steps <= 0) return;
+        if (activeIdx + steps >= data.length) return;
+        clicks = steps;
+        activeIdx += steps;
+        step();
+    }
+
+    function advanceBackward(steps) {
+        if (clicks > 0) return;
+        if (steps <= 0) return;
+        if (activeIdx - steps < 0) return;
+        clicks = steps;
+        activeIdx -= steps;
+        stepBackward();
+    }
+
+    // Klik kartu antrian atau aktif
     _('demo').addEventListener('click', (e) => {
         const card = e.target.closest('.card');
         if (!card) return;
         const idx = +card.dataset.index;
-        if (idx === order[0]) window.location.href = data[idx].href;
-        else advance(order.indexOf(idx));      // posisi dalam antrian = jumlah langkah
+        if (idx === activeIdx) {
+            window.location.href = data[idx].href;
+        } else {
+            if (idx > activeIdx) {
+                advanceForward(idx - activeIdx);
+            } else {
+                advanceBackward(activeIdx - idx);
+            }
+        }
     });
 
     // Panah manual
-    document.querySelector('.arrow-right')?.addEventListener('click', () => advance(1));
-    document.querySelector('.arrow-left')?.addEventListener('click', () => advance(order.length - 1));
+    document.querySelector('.arrow-right')?.addEventListener('click', () => {
+        if (activeIdx < data.length - 1) {
+            advanceForward(1);
+        }
+    });
+    document.querySelector('.arrow-left')?.addEventListener('click', () => {
+        if (activeIdx > 0) {
+            advanceBackward(1);
+        }
+    });
 
     // Preload gambar lalu init
     Promise.all(data.map((d) => new Promise((res) => { const im = new Image(); im.onload = im.onerror = res; im.src = d.image; }))).then(init);

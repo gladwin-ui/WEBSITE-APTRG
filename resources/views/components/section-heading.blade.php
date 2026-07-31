@@ -1,6 +1,6 @@
 @props(['title', 'subtitle' => null, 'centered' => false])
 
-<div class="{{ $centered ? 'text-center' : '' }} mb-10">
+<div {{ $attributes->merge(['class' => ($centered ? 'text-center' : '') . ' mb-6']) }}>
     <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-ink">
         {!! $title !!}
     </h2>

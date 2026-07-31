@@ -16,7 +16,7 @@
                     Aeromodelling &amp; Payload Telemetry Research Group
                 </h1>
                 <div class="reveal reveal-up d-1 h-1.5 w-24 bg-primary my-6"></div>
-                <p class="reveal reveal-up d-2 text-lg sm:text-xl font-bold text-primary-light mb-6">
+                <p class="reveal reveal-up d-2 text-lg sm:text-xl font-bold text-white mb-6">
                     &ldquo;{{ $profile?->tagline ?? 'Fight Together, Win Together, Yes We Can' }}&rdquo;
                 </p>
                 <p class="reveal reveal-up d-3 text-sm sm:text-base text-white/80 leading-relaxed mb-8">
@@ -43,19 +43,19 @@
     </section>
 
     {{-- ===== SECTION 2: TENTANG (putih, teks gelap) ===== --}}
-    <section id="about" data-bg="#ffffff" class="relative w-full flex min-h-screen items-center py-24 text-ink bg-white">
-        <div class="mx-auto max-w-7xl px-6 sm:px-8 w-full">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+    <section id="about" data-bg="#ffffff" class="relative w-full flex min-h-screen items-center py-20 text-ink bg-white">
+        <div class="mx-auto max-w-5xl px-6 sm:px-8 w-full">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
                 <!-- Left Column -->
-                <div class="lg:col-span-7 space-y-4 sm:space-y-6">
+                <div class="lg:col-span-7 space-y-4 sm:space-y-5">
                     <div class="reveal reveal-left">
                         <span class="text-xs font-bold tracking-widest text-primary uppercase">TENTANG</span>
-                        <x-section-heading title="Tentang Laboratorium APTRG" subtitle="Dedikasi riset ilmiah dan kompetisi kedirgantaraan tingkat nasional dan internasional." />
+                        <x-section-heading class="mb-4" title="Tentang Laboratorium APTRG" subtitle="Dedikasi riset ilmiah dan kompetisi kedirgantaraan tingkat nasional dan internasional." />
                     </div>
-                    <p class="reveal reveal-left d-1 text-body text-sm sm:text-base leading-relaxed">
+                    <p class="reveal reveal-left d-1 text-body text-base sm:text-[1.08rem] leading-relaxed lg:leading-loose text-ink/90">
                         {{ $profile?->about }}
                     </p>
-                    <div class="reveal reveal-left d-2 pt-2">
+                    <div class="reveal reveal-left d-2 pt-1">
                         <a href="{{ route('profile') }}" class="inline-flex items-center font-bold text-primary hover:text-primary-dark transition-colors text-sm sm:text-base">
                             Baca Selengkapnya Profil Lab &rarr;
                         </a>
@@ -64,9 +64,9 @@
                 <!-- Right Column -->
                 <div class="reveal reveal-right d-1 lg:col-span-5">
                     <div class="bg-canvas border border-line p-6 sm:p-8 rounded-xl text-center shadow-sm">
-                        <img src="{{ asset('images/logo-aptrg.svg') }}" alt="APTRG Logo" loading="lazy" decoding="async" class="w-32 sm:w-48 h-32 sm:h-48 mx-auto object-contain mb-4">
-                        <h3 class="text-lg sm:text-xl font-bold text-ink">{{ $profile?->name }}</h3>
-                        <p class="text-xs sm:text-sm font-semibold text-primary mt-1">{{ $profile?->faculty }}</p>
+                        <img src="{{ asset('images/logo-aptrg.svg') }}" alt="APTRG Logo" loading="lazy" decoding="async" class="w-44 sm:w-56 h-44 sm:h-56 mx-auto object-contain mb-4">
+                        <h3 class="text-xl sm:text-2xl font-black text-ink leading-tight">{{ $profile?->name }}</h3>
+                        <p class="text-sm sm:text-base font-semibold text-primary mt-1.5">{{ $profile?->faculty }}</p>
                     </div>
                 </div>
             </div>
