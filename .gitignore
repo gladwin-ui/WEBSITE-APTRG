@@ -31,3 +31,5 @@ cloudflared.exe
 /ASSET LOGO
 *PROMPT*.md
 PROMPT*.md
+dump-workspace.ps1
+workspace-info.md
